@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks — the internal operating system for our agency. Projects, clients, finance and tasks in one live shared workspace.">
+  <meta name="color-scheme" content="dark light">
+
+  <title>SynthWorks · Internal Operating System</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="landing.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body class="landing">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ══ NAVBAR ═══════════════════════════════════════════════════════════ -->
+  <header class="lp-nav" id="lpNav">
+    <a class="lp-brand" href="index.html" aria-label="SynthWorks home">
+      <span class="brand-mark">S</span>
+      <span class="brand-text">
+        <b>SynthWorks</b>
+        <span>Studio OS</span>
+      </span>
+    </a>
+
+    <nav class="lp-links" aria-label="Sections">
+      <a href="#features">Features</a>
+      <a href="#modules">Modules</a>
+      <a href="#security">Security</a>
+      <a href="#stack">Stack</a>
+    </nav>
+
+    <div class="lp-actions">
+      <button class="icon-btn theme-toggle" type="button" id="themeToggle" aria-label="Toggle theme"></button>
+      <a class="btn btn--secondary btn--sm" href="login.html">Sign in</a>
+      <a class="btn btn--primary btn--sm" href="login.html?mode=signup">
+        Get started <i data-lucide="arrow-right"></i>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ══ HERO ═══════════════════════════════════════════════════════════ -->
+    <section class="lp-hero">
+      <div class="lp-inner">
+        <span class="lp-eyebrow" data-reveal>
+          <span class="live-dot"></span>
+          Realtime workspace · v2.4
+        </span>
+
+        <h1 class="lp-title" data-reveal>
+          The operating system<br>
+          <span class="text-gradient">our studio runs on.</span>
+        </h1>
+
+        <p class="lp-lede" data-reveal>
+          Clients, projects, tasks, calendars and cash flow — in one shared surface
+          that updates for everyone the moment anyone touches it. No refreshes.
+          No spreadsheets. No "which version is current?"
+        </p>
+
+        <div class="lp-cta" data-reveal>
+          <a class="btn btn--primary btn--lg" href="login.html?mode=signup">
+            Open the workspace <i data-lucide="arrow-right"></i>
+          </a>
+          <a class="btn btn--secondary btn--lg" href="login.html">
+            <i data-lucide="log-in"></i> I have an account
+          </a>
+        </div>
+
+        <ul class="lp-trust" data-reveal>
+          <li><i data-lucide="zap"></i> Realtime sync</li>
+          <li><i data-lucide="shield-check"></i> Row-level security</li>
+          <li><i data-lucide="users"></i> One shared workspace</li>
+        </ul>
+      </div>
+
+      <!-- Product preview -->
+      <div class="lp-preview" data-reveal="scale">
+        <div class="lp-window">
+          <div class="lp-window-bar">
+            <span class="lp-dot lp-dot--r"></span>
+            <span class="lp-dot lp-dot--y"></span>
+            <span class="lp-dot lp-dot--g"></span>
+            <span class="lp-window-url">synthworks.app/dashboard</span>
+          </div>
+
+          <div class="lp-window-body">
+            <aside class="lp-mini-side" aria-hidden="true">
+              <span class="lp-mini-logo"></span>
+              <span class="lp-mini-nav is-on"></span>
+              <span class="lp-mini-nav"></span>
+              <span class="lp-mini-nav"></span>
+              <span class="lp-mini-nav"></span>
+              <span class="lp-mini-nav"></span>
+            </aside>
+
+            <div class="lp-mini-main">
+              <div class="lp-mini-stats">
+                <div class="lp-mini-stat">
+                  <span>Total revenue</span>
+                  <b data-count="284500" data-count-prefix="$" data-count-compact="true">$0</b>
+                  <i class="up">+18.2%</i>
+                </div>
+                <div class="lp-mini-stat">
+                  <span>Active projects</span>
+                  <b data-count="14">0</b>
+                  <i class="up">+3</i>
+                </div>
+                <div class="lp-mini-stat">
+                  <span>Tasks done</span>
+                  <b data-count="326">0</b>
+                  <i class="up">+42</i>
+                </div>
+              </div>
+
+              <div class="lp-mini-chart">
+                <svg viewBox="0 0 420 120" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="lpGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="var(--accent)" stop-opacity=".45" />
+                      <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path class="lp-area" d="M0,96 C40,86 62,54 100,58 C142,62 158,28 200,34 C244,40 262,12 300,20 C340,28 372,8 420,14 L420,120 L0,120 Z" fill="url(#lpGrad)" />
+                  <path class="lp-line" d="M0,96 C40,86 62,54 100,58 C142,62 158,28 200,34 C244,40 262,12 300,20 C340,28 372,8 420,14"
+                        fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" />
+                </svg>
+              </div>
+
+              <div class="lp-mini-rows">
+                <span class="lp-mini-row"></span>
+                <span class="lp-mini-row"></span>
+                <span class="lp-mini-row"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ FEATURES ═══════════════════════════════════════════════════════ -->
+    <section class="lp-section" id="features">
+      <div class="lp-inner">
+        <header class="lp-section-head" data-reveal>
+          <span class="eyebrow">Why it exists</span>
+          <h2>Built for the way a studio actually works</h2>
+          <p>Every screen is shared. Every change is instant. Every action is logged.</p>
+        </header>
+
+        <div class="lp-feature-grid stagger">
+          <article class="card card--hover card-pad" data-reveal>
+            <span class="stat-icon"><i data-lucide="radio"></i></span>
+            <h3>Truly realtime</h3>
+            <p>Supabase Realtime streams every insert, update and delete straight into
+               every open browser. Drag a card, and your colleague sees it move.</p>
+          </article>
+
+          <article class="card card--hover card-pad" data-reveal>
+            <span class="stat-icon is-success"><i data-lucide="wallet"></i></span>
+            <h3>Money you can see</h3>
+            <p>Income, expenses, margin and invoice status — charted daily, weekly,
+               monthly and yearly, exportable to CSV or PDF in a click.</p>
+          </article>
+
+          <article class="card card--hover card-pad" data-reveal>
+            <span class="stat-icon is-info"><i data-lucide="layout-grid"></i></span>
+            <h3>Kanban that keeps up</h3>
+            <p>Drag and drop across Todo, Doing, Review and Done. Project progress
+               recalculates itself from the board, server-side.</p>
+          </article>
+
+          <article class="card card--hover card-pad" data-reveal>
+            <span class="stat-icon is-warning"><i data-lucide="history"></i></span>
+            <h3>Nothing gets lost</h3>
+            <p>A database trigger writes an immutable audit line for every change,
+               so "who moved this?" always has an answer.</p>
+          </article>
+
+          <article class="card card--hover card-pad" data-reveal>
+            <span class="stat-icon"><i data-lucide="command"></i></span>
+            <h3>Keyboard first</h3>
+            <p><kbd>Ctrl</kbd><kbd>K</kbd> searches everything. <kbd>G</kbd> then a letter
+               jumps anywhere. The mouse is optional.</p>
+          </article>
+
+          <article class="card card--hover card-pad" data-reveal>
+            <span class="stat-icon is-danger"><i data-lucide="smartphone"></i></span>
+            <h3>Every screen size</h3>
+            <p>From a 4K studio display to a phone on the train — adaptive layouts,
+               touch targets and charts that resize themselves.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ MODULES ════════════════════════════════════════════════════════ -->
+    <section class="lp-section lp-section--alt" id="modules">
+      <div class="lp-inner">
+        <header class="lp-section-head" data-reveal>
+          <span class="eyebrow">Inside</span>
+          <h2>Ten modules, one workspace</h2>
+          <p>Each one is a first-class surface — not a tab bolted onto a spreadsheet.</p>
+        </header>
+
+        <div class="lp-modules stagger">
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="layout-dashboard"></i><b>Dashboard</b><span>27 live metrics</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="building-2"></i><b>Clients</b><span>CRM &amp; revenue</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="folder-kanban"></i><b>Projects</b><span>Budgets &amp; milestones</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="circle-check-big"></i><b>Tasks</b><span>Drag &amp; drop board</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="wallet"></i><b>Finance</b><span>P&amp;L and invoices</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="calendar-days"></i><b>Calendar</b><span>Meetings &amp; deadlines</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="users"></i><b>Team</b><span>Presence &amp; load</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="activity"></i><b>Activity</b><span>Immutable audit</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="chart-column"></i><b>Analytics</b><span>Growth &amp; trends</span></a>
+          <a class="lp-module" href="login.html" data-reveal><i data-lucide="settings"></i><b>Settings</b><span>Workspace config</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECURITY ═══════════════════════════════════════════════════════ -->
+    <section class="lp-section" id="security">
+      <div class="lp-inner lp-split">
+        <div data-reveal="left">
+          <span class="eyebrow">Security model</span>
+          <h2 class="mt-2">Shared by design,<br>locked by default</h2>
+          <p class="muted mt-4">
+            SynthWorks is an internal tool, so every colleague sees the same workspace.
+            That is a deliberate choice enforced in the database — not an accident of
+            missing checks.
+          </p>
+
+          <ul class="lp-checks mt-6">
+            <li><i data-lucide="check"></i> Row Level Security enabled on all 13 tables</li>
+            <li><i data-lucide="check"></i> Anonymous access revoked entirely</li>
+            <li><i data-lucide="check"></i> You can only edit your own profile row</li>
+            <li><i data-lucide="check"></i> The activity log is append-only — no UPDATE, no DELETE</li>
+            <li><i data-lucide="check"></i> Private file bucket served through signed URLs</li>
+          </ul>
+        </div>
+
+        <div class="lp-code card" data-reveal="right">
+          <div class="lp-code-bar">
+            <span class="lp-dot lp-dot--r"></span>
+            <span class="lp-dot lp-dot--y"></span>
+            <span class="lp-dot lp-dot--g"></span>
+            <span class="lp-window-url">setup.sql</span>
+          </div>
+<pre class="lp-pre"><code><span class="c">-- Shared workspace: any colleague, full CRUD</span>
+<span class="k">create policy</span> <span class="s">"read_all_projects"</span> <span class="k">on</span> public.projects
+  <span class="k">for select to</span> authenticated <span class="k">using</span> (<span class="k">true</span>);
+
+<span class="c">-- …but your name is yours alone</span>
+<span class="k">create policy</span> <span class="s">"update_all_profiles"</span> <span class="k">on</span> public.profiles
+  <span class="k">for update to</span> authenticated
+  <span class="k">using</span> (id = auth.uid())
+  <span class="k">with check</span> (id = auth.uid());
+
+<span class="c">-- The audit log cannot be rewritten</span>
+<span class="c">-- (no UPDATE or DELETE policy exists)</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ STACK ══════════════════════════════════════════════════════════ -->
+    <section class="lp-section lp-section--alt" id="stack">
+      <div class="lp-inner">
+        <header class="lp-section-head" data-reveal>
+          <span class="eyebrow">Under the hood</span>
+          <h2>No framework. No build step.</h2>
+          <p>Hand-written HTML, CSS and ES modules on top of Supabase. It loads fast because there is nothing to load.</p>
+        </header>
+
+        <div class="lp-stack stagger">
+          <div class="lp-chip" data-reveal><i data-lucide="code-xml"></i> HTML5</div>
+          <div class="lp-chip" data-reveal><i data-lucide="palette"></i> CSS3</div>
+          <div class="lp-chip" data-reveal><i data-lucide="braces"></i> Vanilla ES6</div>
+          <div class="lp-chip" data-reveal><i data-lucide="database"></i> Supabase</div>
+          <div class="lp-chip" data-reveal><i data-lucide="radio"></i> Realtime</div>
+          <div class="lp-chip" data-reveal><i data-lucide="lock"></i> Postgres RLS</div>
+          <div class="lp-chip" data-reveal><i data-lucide="chart-line"></i> Chart.js</div>
+          <div class="lp-chip" data-reveal><i data-lucide="sparkles"></i> GSAP</div>
+        </div>
+
+        <div class="lp-final card" data-reveal="scale">
+          <h2>Ready when you are.</h2>
+          <p class="muted">Sign in with your work email and the workspace is already populated.</p>
+          <div class="lp-cta">
+            <a class="btn btn--primary btn--lg" href="login.html?mode=signup">
+              Create your account <i data-lucide="arrow-right"></i>
+            </a>
+            <a class="btn btn--ghost btn--lg" href="login.html">Sign in instead</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══ FOOTER ═══════════════════════════════════════════════════════════ -->
+  <footer class="lp-foot">
+    <div class="lp-inner lp-foot-inner">
+      <div class="lp-brand">
+        <span class="brand-mark">S</span>
+        <span class="brand-text"><b>SynthWorks</b><span>Studio OS</span></span>
+      </div>
+      <p class="muted fs-xs">Internal tool · Built in-house · <span id="year"></span></p>
+      <nav class="lp-foot-links" aria-label="Footer">
+        <a href="login.html">Sign in</a>
+        <a href="#features">Features</a>
+        <a href="#security">Security</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ══ LIBRARIES ════════════════════════════════════════════════════════ -->
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="landing.js"></script>
+</body>
+</html>

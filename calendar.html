@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks calendar — meetings, deadlines, milestones and reminders in one shared view.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Calendar</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <div class="page-head">
+          <div>
+            <h1>Calendar</h1>
+            <p class="sub">Meetings, deadlines, milestones and reminders — for the whole studio.</p>
+          </div>
+
+          <div class="page-head-actions">
+            <span class="realtime-pill"><i></i><span>Connecting</span></span>
+            <button class="btn btn--primary btn--sm" type="button" id="addEvent">
+              <i data-lucide="plus"></i> New event
+            </button>
+          </div>
+        </div>
+
+        <div class="split">
+          <!-- ══ MONTH GRID ═══════════════════════════════════════════ -->
+          <div>
+            <div class="cal-toolbar">
+              <button class="icon-btn" type="button" id="prevMonth" aria-label="Previous month">
+                <i data-lucide="chevron-left"></i>
+              </button>
+              <button class="icon-btn" type="button" id="nextMonth" aria-label="Next month">
+                <i data-lucide="chevron-right"></i>
+              </button>
+              <h2 class="cal-title" id="calTitle" aria-live="polite">—</h2>
+              <button class="btn btn--secondary btn--sm" type="button" id="todayBtn">
+                <i data-lucide="calendar-check"></i> Today
+              </button>
+
+              <span class="toolbar-spacer" style="flex:1"></span>
+
+              <div class="segmented" id="typeFilter" role="group" aria-label="Filter events by type">
+                <button type="button" class="is-active" data-type="all">All</button>
+                <button type="button" data-type="meeting">Meetings</button>
+                <button type="button" data-type="deadline">Deadlines</button>
+                <button type="button" data-type="milestone">Milestones</button>
+              </div>
+            </div>
+
+            <div class="cal-grid" id="calGrid" role="grid" aria-labelledby="calTitle"></div>
+
+            <div class="flex wrap gap-4 mt-4 fs-xs muted">
+              <span class="flex items-center gap-2"><i class="mini-cal-dot"></i> Meeting</span>
+              <span class="flex items-center gap-2"><i class="mini-cal-dot" style="background:var(--danger)"></i> Deadline</span>
+              <span class="flex items-center gap-2"><i class="mini-cal-dot" style="background:var(--warning)"></i> Milestone</span>
+              <span class="flex items-center gap-2"><i class="mini-cal-dot" style="background:var(--info)"></i> Reminder</span>
+            </div>
+          </div>
+
+          <!-- ══ AGENDA ═══════════════════════════════════════════════ -->
+          <div class="col gap-4">
+            <div class="card card-pad" data-reveal>
+              <div class="between mb-4">
+                <div>
+                  <h3 id="agendaTitle">Today</h3>
+                  <p class="fs-xs muted" id="agendaSub"></p>
+                </div>
+                <button class="btn btn--sm btn--secondary" type="button" id="addForDay">
+                  <i data-lucide="plus"></i>
+                </button>
+              </div>
+              <div id="agendaList"></div>
+            </div>
+
+            <div class="card card-pad" data-reveal>
+              <h3 class="mb-4">Next 14 days</h3>
+              <div id="upcomingList"></div>
+            </div>
+
+            <div class="card card-pad" data-reveal>
+              <h3 class="mb-4">This month</h3>
+              <div class="cli-rows" id="monthStats"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="calendar.js"></script>
+</body>
+</html>

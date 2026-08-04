@@ -1,0 +1,245 @@
+/* =============================================================================
+   SynthWorks — theme.css
+   The single source of truth for every colour, shadow, radius and easing curve
+   in the product. Nothing anywhere else in the codebase hardcodes a colour.
+
+   DESIGN DIRECTION: minimal.
+   Flat surfaces, hairline borders, one accent colour used sparingly, and
+   shadows soft enough that you notice depth without noticing the shadow.
+   Decorative gradients and glows are gone — colour now carries meaning
+   (status, action) rather than atmosphere.
+
+   Two themes, switched by  <html data-theme="dark|light">.
+   shell.js writes that attribute and persists the choice.
+   ========================================================================== */
+
+:root {
+  /* ── Brand ───────────────────────────────────────────────────────────── */
+  --brand-500: #7c3aed;
+  --brand-400: #a855f7;
+  --brand-600: #6d28d9;
+  --brand-300: #c4b5fd;
+
+  /* ── Semantic status colours (identical in both themes) ──────────────── */
+  --success: #22c55e;
+  --warning: #facc15;
+  --danger:  #ef4444;
+  --info:    #38bdf8;
+
+  --success-soft: rgba(34, 197, 94, .12);
+  --warning-soft: rgba(250, 204, 21, .12);
+  --danger-soft:  rgba(239, 68, 68, .12);
+  --info-soft:    rgba(56, 189, 248, .12);
+  --brand-soft:   rgba(124, 58, 237, .12);
+
+  /* ── Typography — fluid, never needs a media query ───────────────────── */
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', var(--font-sans);
+  --font-mono:    ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+
+  --fs-xs:   clamp(.688rem, .66rem + .12vw, .75rem);
+  --fs-sm:   clamp(.781rem, .75rem + .14vw, .844rem);
+  --fs-base: clamp(.875rem, .84rem + .16vw, .938rem);
+  --fs-md:   clamp(.975rem, .93rem + .2vw,  1.063rem);
+  --fs-lg:   clamp(1.125rem, 1.05rem + .32vw, 1.25rem);
+  --fs-xl:   clamp(1.313rem, 1.2rem + .5vw,  1.625rem);
+  --fs-2xl:  clamp(1.625rem, 1.42rem + .9vw, 2.125rem);
+  --fs-3xl:  clamp(2rem, 1.7rem + 1.5vw,    2.75rem);
+  --fs-hero: clamp(2.25rem, 1.7rem + 2.8vw, 4rem);
+
+  /* ── Spacing scale (4px base) ────────────────────────────────────────── */
+  --sp-1:  .25rem;
+  --sp-2:  .5rem;
+  --sp-3:  .75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.25rem;
+  --sp-6:  1.5rem;
+  --sp-8:  2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+
+  /* ── Radii — tighter; large radii read as "playful", not "precise" ───── */
+  --r-xs:  5px;
+  --r-sm:  7px;
+  --r-md:  9px;
+  --r-lg:  11px;
+  --r-xl:  14px;
+  --r-2xl: 18px;
+  --r-full: 999px;
+
+  /* ── Motion — short, so the UI feels immediate rather than animated ──── */
+  --ease-out:  cubic-bezier(.22, 1, .36, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+  --t-fast: .12s;
+  --t-mid:  .2s;
+  --t-slow: .32s;
+  --t-theme: .3s;
+
+  /* ── Layout metrics ──────────────────────────────────────────────────── */
+  --sidebar-w:           240px;
+  --sidebar-w-collapsed: 64px;
+  --topbar-h:            60px;
+  --page-max:            1440px;
+  --z-bg:      0;
+  --z-content: 1;
+  --z-sticky:  40;
+  --z-sidebar: 60;
+  --z-drawer:  70;
+  --z-modal:   90;
+  --z-toast:   100;
+  --z-loader:  120;
+}
+
+/* =============================================================================
+   DARK THEME — the default
+   ========================================================================== */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg:            #0a0a0f;
+  --bg-2:          #101018;
+  --bg-3:          #16161f;
+  --bg-elevated:   #14141c;
+
+  --card:          #101018;
+  --card-hover:    #16161f;
+  --card-solid:    #101018;
+  --glass:         #0a0a0f;
+  --glass-strong:  #101018;
+
+  --border:        rgba(255, 255, 255, .08);
+  --border-strong: rgba(255, 255, 255, .14);
+  --border-focus:  rgba(168, 85, 247, .5);
+
+  --text:          #f4f4f6;
+  --text-2:        #c9c9d4;
+  --text-muted:    #8b8b9c;
+  --text-faint:    #61616f;
+
+  --primary:       #7c3aed;
+  --primary-hover: #8b4bf5;
+  --accent:        #a855f7;
+  --on-primary:    #ffffff;
+
+  --input-bg:      #0a0a0f;
+  --input-border:  rgba(255, 255, 255, .1);
+  --overlay:       rgba(0, 0, 0, .6);
+  --track:         rgba(255, 255, 255, .07);
+
+  --shadow-sm: none;
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, .35);
+  --shadow-lg: 0 12px 32px -12px rgba(0, 0, 0, .6);
+  --shadow-glow: none;
+
+  /* Flat by design — these "gradient" tokens resolve to a solid colour so
+     every component that referenced them stays valid without restyling. */
+  --grad-brand: var(--primary);
+  --grad-text:  var(--text);
+  --grad-card:  var(--card);
+  --grad-line:  var(--border);
+
+  --grid-line: rgba(255, 255, 255, .022);
+
+  --chart-grid: rgba(255, 255, 255, .06);
+  --chart-tick: #8b8b9c;
+  --skeleton:   linear-gradient(90deg, rgba(255,255,255,.03) 25%, rgba(255,255,255,.07) 37%, rgba(255,255,255,.03) 63%);
+}
+
+/* =============================================================================
+   LIGHT THEME
+   ========================================================================== */
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg:            #fbfbfc;
+  --bg-2:          #ffffff;
+  --bg-3:          #f4f4f6;
+  --bg-elevated:   #ffffff;
+
+  --card:          #ffffff;
+  --card-hover:    #f8f8fa;
+  --card-solid:    #ffffff;
+  --glass:         #ffffff;
+  --glass-strong:  #ffffff;
+
+  --border:        #e6e6ea;
+  --border-strong: #d0d0d8;
+  --border-focus:  rgba(109, 40, 217, .4);
+
+  --text:          #16161c;
+  --text-2:        #45454f;
+  --text-muted:    #71717f;
+  --text-faint:    #9a9aa8;
+
+  --primary:       #6d28d9;
+  --primary-hover: #5b21b6;
+  --accent:        #7c3aed;
+  --on-primary:    #ffffff;
+
+  --input-bg:      #ffffff;
+  --input-border:  #e0e0e6;
+  --overlay:       rgba(16, 16, 24, .32);
+  --track:         #eeeef2;
+
+  --shadow-sm: none;
+  --shadow-md: 0 1px 3px rgba(16, 16, 24, .07), 0 4px 12px -6px rgba(16, 16, 24, .08);
+  --shadow-lg: 0 12px 32px -14px rgba(16, 16, 24, .18);
+  --shadow-glow: none;
+
+  --grad-brand: var(--primary);
+  --grad-text:  var(--text);
+  --grad-card:  var(--card);
+  --grad-line:  var(--border);
+
+  --grid-line: rgba(16, 16, 24, .03);
+
+  --chart-grid: rgba(16, 16, 24, .07);
+  --chart-tick: #71717f;
+  --skeleton:   linear-gradient(90deg, #f0f0f3 25%, #f8f8fa 37%, #f0f0f3 63%);
+}
+
+/* -----------------------------------------------------------------------------
+   Theme cross-fade.
+   Scoped to the properties that actually change so the switch reads as a
+   dimmer, and kept away from transform/opacity so it never fights an
+   entrance animation.
+   -------------------------------------------------------------------------- */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color var(--t-theme) var(--ease-in-out),
+              border-color     var(--t-theme) var(--ease-in-out),
+              color            var(--t-theme) var(--ease-in-out),
+              fill             var(--t-theme) var(--ease-in-out),
+              stroke           var(--t-theme) var(--ease-in-out) !important;
+  transition-delay: 0s !important;
+}
+
+/* -----------------------------------------------------------------------------
+   High contrast + reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-contrast: more) {
+  :root {
+    --border:     rgba(255, 255, 255, .3);
+    --text-muted: #c2c2d0;
+  }
+  [data-theme='light'] {
+    --border:     #8b8b9c;
+    --text-muted: #45454f;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

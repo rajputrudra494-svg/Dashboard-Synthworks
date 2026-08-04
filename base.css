@@ -1,0 +1,261 @@
+/* =============================================================================
+   SynthWorks — base.css
+   Reset, typography, scrollbars, focus states, shared utilities.
+   Loaded after theme.css on every page.
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  /* `clip` rather than `hidden`: it prevents sideways scrolling without
+     turning <body> into a scroll container, so `position: sticky` on the
+     sidebar and top bar keeps working. Older browsers ignore it and fall
+     back to the plain `hidden` above. */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* Media never breaks a layout. */
+img, svg, video, canvas, iframe {
+  display: block;
+  max-width: 100%;
+}
+img, video { height: auto; }
+
+/* Inputs inherit the page font instead of the browser default. */
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+button { background: none; border: 0; cursor: pointer; }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--t-fast) var(--ease-out);
+}
+a:hover { color: var(--primary-hover); }
+
+ul, ol { list-style: none; }
+
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Headings ─────────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.022em;
+  color: var(--text);
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl);  }
+h3 { font-size: var(--fs-lg);  }
+h4 { font-size: var(--fs-md);  }
+h5, h6 { font-size: var(--fs-base); }
+
+p { text-wrap: pretty; }
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+  font-size: .875em;
+}
+
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.55em;
+  padding: .15em .45em;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: var(--r-xs);
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+}
+
+::selection {
+  background: rgba(168, 85, 247, .32);
+  color: var(--text);
+}
+
+/* ── Scrollbars ───────────────────────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: var(--r-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: content-box; }
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* ── Focus: visible for keyboards, invisible for mouse clicks ─────────────── */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+/* Skip link for keyboard + screen-reader users. */
+.skip-link {
+  position: absolute;
+  top: var(--sp-3);
+  left: var(--sp-3);
+  z-index: var(--z-loader);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--r-sm);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform var(--t-mid) var(--ease-out);
+}
+.skip-link:focus-visible { transform: translateY(0); color: var(--on-primary); }
+
+/* ── Accessibility helpers ────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[hidden], .hidden { display: none !important; }
+[aria-busy='true'] { cursor: progress; }
+[disabled], .is-disabled {
+  opacity: .5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ── Typography utilities ─────────────────────────────────────────────────── */
+/* Was a clipped gradient. In the minimal theme there is no gradient to clip,
+   and `background-clip:text` + `color:transparent` over a solid background
+   renders the text invisible — so this is now simply an accent colour. */
+.text-gradient { color: var(--accent); }
+.display     { font-family: var(--font-display); letter-spacing: -.03em; }
+.muted       { color: var(--text-muted); }
+.faint       { color: var(--text-faint); }
+.mono        { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.tabular     { font-variant-numeric: tabular-nums; }
+.nowrap      { white-space: nowrap; }
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.fs-xs { font-size: var(--fs-xs); }
+.fs-sm { font-size: var(--fs-sm); }
+.fs-lg { font-size: var(--fs-lg); }
+.w-600 { font-weight: 600; }
+.w-700 { font-weight: 700; }
+
+.c-success { color: var(--success); }
+.c-warning { color: var(--warning); }
+.c-danger  { color: var(--danger);  }
+.c-brand   { color: var(--accent);  }
+
+/* ── Layout utilities ─────────────────────────────────────────────────────── */
+.flex   { display: flex; }
+.grid   { display: grid; }
+.center { display: flex; align-items: center; justify-content: center; }
+/* Wraps by default: this row routinely holds a title plus one or two
+   segmented controls, which cannot fit side by side on a small screen. */
+.between{ display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; }
+.items-center  { align-items: center; }
+.items-start   { align-items: flex-start; }
+.justify-end   { justify-content: flex-end; }
+.col    { display: flex; flex-direction: column; }
+.wrap   { flex-wrap: wrap; }
+.grow   { flex: 1 1 auto; min-width: 0; }
+.gap-1 { gap: var(--sp-1); }
+.gap-2 { gap: var(--sp-2); }
+.gap-3 { gap: var(--sp-3); }
+.gap-4 { gap: var(--sp-4); }
+.gap-6 { gap: var(--sp-6); }
+.mt-2 { margin-top: var(--sp-2); }
+.mt-4 { margin-top: var(--sp-4); }
+.mt-6 { margin-top: var(--sp-6); }
+.mb-2 { margin-bottom: var(--sp-2); }
+.mb-4 { margin-bottom: var(--sp-4); }
+.mb-6 { margin-bottom: var(--sp-6); }
+.full { width: 100%; }
+
+/* ── Lucide icon sizing ───────────────────────────────────────────────────── */
+[data-lucide],
+.lucide {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.9;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.icon-sm [data-lucide], .icon-sm.lucide { width: 15px; height: 15px; }
+.icon-lg [data-lucide], .icon-lg.lucide { width: 22px; height: 22px; }
+.icon-xl [data-lucide], .icon-xl.lucide { width: 30px; height: 30px; stroke-width: 1.6; }
+
+/* ── Print ────────────────────────────────────────────────────────────────── */
+@media print {
+  .app-sidebar, .app-topbar, .fx-layer, .toast-stack, .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
+  .app-main { margin: 0 !important; padding: 0 !important; }
+  .card { break-inside: avoid; border: 1px solid #ddd; box-shadow: none; }
+}

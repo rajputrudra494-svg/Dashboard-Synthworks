@@ -1,0 +1,321 @@
+/* =============================================================================
+   SynthWorks — animations.css
+   Every @keyframes in the product plus the scroll-reveal, confetti, toast and
+   success-checkmark systems that depend on them.
+
+   DESIGN DIRECTION: minimal.
+   The ambient keyframes (aurora drift, floating blobs, conic border spin,
+   gradient pan, breathing logo) were removed along with the effects that used
+   them. What remains is motion tied to an event: something arrived, a value
+   changed, a click landed, a milestone completed.
+   ========================================================================== */
+
+/* =============================================================================
+   1. KEYFRAMES
+   ========================================================================== */
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes row-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes rail-in {
+  from { transform: translateY(-50%) scaleY(0); }
+  to   { transform: translateY(-50%) scaleY(1); }
+}
+
+@keyframes row-flash {
+  0%   { background: var(--brand-soft); box-shadow: inset 2px 0 0 var(--accent); }
+  100% { background: transparent; box-shadow: inset 2px 0 0 transparent; }
+}
+
+@keyframes skeleton {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@keyframes loader-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+@keyframes pulse-dot {
+  0%   { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  70%  { box-shadow: 0 0 0 5px transparent; opacity: .85; }
+  100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+}
+
+@keyframes ripple {
+  to { transform: scale(3); opacity: 0; }
+}
+
+@keyframes shake {
+  0%, 100%   { transform: translateX(0); }
+  20%, 60%   { transform: translateX(-5px); }
+  40%, 80%   { transform: translateX(5px); }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(120%) scale(.9); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: none; max-height: 200px; margin-bottom: var(--sp-2); }
+  to   { opacity: 0; transform: translateX(120%) scale(.9); max-height: 0; margin-bottom: 0; }
+}
+
+@keyframes check-draw {
+  from { stroke-dashoffset: 48; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes circle-draw {
+  from { stroke-dashoffset: 166; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes check-pop {
+  0%   { transform: scale(.6); opacity: 0; }
+  55%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes confetti-fall {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate3d(var(--dx, 0), 105vh, 0) rotate(var(--dr, 900deg)); opacity: 0; }
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: .5; }
+  50%      { opacity: 1; }
+}
+
+/* =============================================================================
+   2. SCROLL REVEAL
+   A tiny IntersectionObserver-driven system (animations.js) that also honours
+   AOS attributes if the AOS library is present.
+   ========================================================================== */
+/* A short lift, not a slide. Horizontal reveals are gone entirely: an
+   un-revealed element is still laid out, so an X offset pushed it past the
+   viewport and gave the page a sideways scrollbar until the user scrolled far
+   enough to trigger the reveal. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .3s var(--ease-out), transform .3s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal='scale'] { transform: none; }
+[data-reveal='blur']  { transform: none; }
+[data-reveal='left'],
+[data-reveal='right'] { transform: translateY(6px); }
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger helper: parent sets the rhythm, children inherit an index. */
+.stagger > * {
+  --reveal-delay: calc(var(--i, 0) * 24ms);
+}
+
+/* =============================================================================
+   3. TOASTS
+   ========================================================================== */
+.toast-stack {
+  position: fixed;
+  top: var(--sp-5);
+  right: var(--sp-5);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--sp-2);
+  width: min(370px, calc(100vw - var(--sp-8)));
+  pointer-events: none;
+}
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--glass-strong);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  pointer-events: auto;
+  animation: toast-in .42s var(--ease-spring) both;
+}
+.toast.is-leaving { animation: toast-out .3s var(--ease-out) forwards; }
+
+.toast-ico {
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  flex-shrink: 0;
+  border-radius: var(--r-xs);
+}
+.toast-body { flex: 1; min-width: 0; }
+.toast-body b { display: block; font-size: var(--fs-sm); font-weight: 600; line-height: 1.4; }
+.toast-body p { font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.45; }
+.toast-close {
+  display: grid;
+  place-items: center;
+  width: 24px; height: 24px;
+  flex-shrink: 0;
+  margin: -2px -4px 0 0;
+  border-radius: var(--r-xs);
+  color: var(--text-faint);
+  transition: color var(--t-fast), background var(--t-fast);
+}
+.toast-close:hover { color: var(--text); background: var(--card-hover); }
+
+/* Countdown bar. */
+.toast-bar {
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: left;
+  animation: toast-timer linear forwards;
+}
+@keyframes toast-timer { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+.toast--success .toast-ico { background: var(--success-soft); color: var(--success); }
+.toast--success .toast-bar { background: var(--success); }
+.toast--error   .toast-ico { background: var(--danger-soft);  color: var(--danger);  }
+.toast--error   .toast-bar { background: var(--danger); }
+.toast--warning .toast-ico { background: var(--warning-soft); color: var(--warning); }
+.toast--warning .toast-bar { background: var(--warning); }
+.toast--info    .toast-ico { background: var(--info-soft);    color: var(--info);    }
+.toast--info    .toast-bar { background: var(--info); }
+.toast--brand   .toast-ico { background: var(--brand-soft);   color: var(--accent);  }
+.toast--brand   .toast-bar { background: var(--accent); }
+
+/* =============================================================================
+   4. SUCCESS CHECKMARK
+   ========================================================================== */
+.success-mark {
+  display: grid;
+  place-items: center;
+  width: 76px; height: 76px;
+  margin: 0 auto;
+  animation: check-pop .5s var(--ease-spring) both;
+}
+.success-mark svg { width: 76px; height: 76px; }
+.success-mark .sm-circle {
+  fill: none;
+  stroke: var(--success);
+  stroke-width: 3;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  animation: circle-draw .6s var(--ease-out) .1s forwards;
+}
+.success-mark .sm-check {
+  fill: none;
+  stroke: var(--success);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: check-draw .34s var(--ease-out) .58s forwards;
+}
+.success-mark--brand .sm-circle,
+.success-mark--brand .sm-check { stroke: var(--accent); }
+
+/* =============================================================================
+   5. CONFETTI
+   ========================================================================== */
+.confetti-layer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-toast);
+  overflow: hidden;
+  pointer-events: none;
+}
+.confetti-bit {
+  position: absolute;
+  top: -14px;
+  width: 9px;
+  height: 15px;
+  border-radius: 2px;
+  will-change: transform, opacity;
+  animation: confetti-fall var(--dur, 2.8s) var(--ease-out) forwards;
+  animation-delay: var(--delay, 0s);
+}
+.confetti-bit.is-round { border-radius: 50%; width: 10px; height: 10px; }
+.confetti-bit.is-strip { width: 4px; height: 18px; }
+
+/* =============================================================================
+   6. MICRO-INTERACTIONS
+   ========================================================================== */
+
+/* .magnetic is retained as a no-op: the pointer-tracking that moved these
+   buttons is gone, but the class is still emitted by several templates. */
+.magnetic { /* intentionally empty */ }
+
+/* Animated counters: the value fades up as digits change. */
+/* Counters change value in place; no flip animation. */
+.counting { /* intentionally empty */ }
+
+/* One-shot shake, used when a sign-in attempt is rejected. */
+.shake-once { animation: shake .4s var(--ease-out); }
+
+/* Link underline that grows from the left. */
+.link-underline { position: relative; }
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 100%; height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--t-mid) var(--ease-out);
+}
+.link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* Icon that nudges on hover of its parent. */
+.nudge-x { transition: transform var(--t-fast) var(--ease-out); }
+*:hover > .nudge-x { transform: translateX(3px); }
+
+/* Live "recording" pulse used by the realtime status pill. */
+.realtime-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  background: var(--card);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.realtime-pill i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  transition: background var(--t-mid);
+}
+.realtime-pill.is-live i { background: var(--success); animation: glow-breathe 2s var(--ease-in-out) infinite; }
+.realtime-pill.is-live { color: var(--success); border-color: var(--success-soft); }
+.realtime-pill.is-down i { background: var(--danger); }
+.realtime-pill.is-down { color: var(--danger); }
+
+/* The scrolling marquee strip was removed in the minimal redesign. */
+
+/* GSAP sets will-change on animated nodes; this covers the CSS-only cases. */
+.will-animate { will-change: transform, opacity; }

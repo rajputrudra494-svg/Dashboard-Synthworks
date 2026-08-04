@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks dashboard — revenue, projects, tasks and team activity in realtime.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Dashboard</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <!-- ══ PAGE HEAD ══════════════════════════════════════════════ -->
+        <div class="page-head">
+          <div>
+            <span class="greeting">
+              <span class="live-dot"></span>
+              <span id="greetingText">Good morning</span>
+            </span>
+            <h1 id="dashTitle">Studio overview</h1>
+            <p class="sub" id="dashSub">Everything the team is running right now.</p>
+          </div>
+
+          <div class="page-head-actions">
+            <span class="realtime-pill" title="Realtime connection status">
+              <i></i><span>Connecting</span>
+            </span>
+            <button class="btn btn--secondary btn--sm" type="button" id="refreshBtn">
+              <i data-lucide="refresh-cw"></i> Refresh
+            </button>
+            <button class="btn btn--primary btn--sm" type="button" data-quick="project">
+              <i data-lucide="plus"></i> New project
+            </button>
+          </div>
+        </div>
+
+        <!-- ══ REVENUE STATS ══════════════════════════════════════════ -->
+        <section aria-labelledby="revenueHead">
+          <h2 class="sr-only" id="revenueHead">Revenue summary</h2>
+          <div class="stat-grid stagger" id="revenueStats"></div>
+        </section>
+
+        <!-- ══ OPERATIONS STATS ═══════════════════════════════════════ -->
+        <section aria-labelledby="opsHead">
+          <div class="section-head">
+            <h2 id="opsHead">Operations</h2>
+            <a class="btn btn--sm btn--ghost" href="analytics.html">
+              Full analytics <i data-lucide="arrow-right" class="nudge-x"></i>
+            </a>
+          </div>
+          <div class="stat-grid stagger" id="opsStats"></div>
+        </section>
+
+        <!-- ══ CHARTS ═════════════════════════════════════════════════ -->
+        <section class="split mt-6" aria-labelledby="chartsHead">
+          <h2 class="sr-only" id="chartsHead">Charts</h2>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Revenue &amp; expenses</h3>
+                <p>Rolling 12 months</p>
+              </div>
+              <div class="segmented" id="revenueRange" role="group" aria-label="Revenue range">
+                <button type="button" data-range="6">6M</button>
+                <button type="button" class="is-active" data-range="12">12M</button>
+                <button type="button" data-range="24">24M</button>
+              </div>
+            </div>
+            <div class="chart-box"><canvas id="revenueChart" aria-label="Revenue and expenses over time" role="img"></canvas></div>
+            <div class="chart-legend" id="revenueLegend"></div>
+          </div>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Project status</h3>
+                <p>Live distribution</p>
+              </div>
+            </div>
+            <div class="chart-box chart-box--pie donut-wrap">
+              <canvas id="statusChart" aria-label="Projects by status" role="img"></canvas>
+              <div class="donut-center">
+                <b id="statusTotal">0</b>
+                <span>Projects</span>
+              </div>
+            </div>
+            <div class="legend-stack" id="statusLegend"></div>
+          </div>
+        </section>
+
+        <section class="split-even mt-4">
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Task completion</h3>
+                <p>Created vs completed · last 14 days</p>
+              </div>
+              <span class="badge is-brand" id="completionBadge">0%</span>
+            </div>
+            <div class="chart-box chart-box--sm"><canvas id="taskChart" aria-label="Task completion trend" role="img"></canvas></div>
+            <div class="chart-legend" id="taskLegend"></div>
+          </div>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Client growth</h3>
+                <p>Cumulative, last 12 months</p>
+              </div>
+              <span class="trend up" id="clientTrend"><i data-lucide="trending-up"></i> 0%</span>
+            </div>
+            <div class="chart-box chart-box--sm"><canvas id="clientChart" aria-label="Client growth" role="img"></canvas></div>
+            <div class="chart-legend" id="clientLegend"></div>
+          </div>
+        </section>
+
+        <!-- ══ EARNINGS BREAKDOWN ═════════════════════════════════════ -->
+        <section class="split-even mt-4">
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Weekly earnings</h3>
+                <p>Income booked each day this week</p>
+              </div>
+              <b class="chart-total" id="weekTotal">—</b>
+            </div>
+            <div class="chart-box chart-box--sm"><canvas id="weeklyChart" aria-label="Weekly earnings" role="img"></canvas></div>
+          </div>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Monthly earnings</h3>
+                <p>Income vs target</p>
+              </div>
+              <b class="chart-total" id="monthTotal">—</b>
+            </div>
+            <div class="chart-box chart-box--sm"><canvas id="monthlyChart" aria-label="Monthly earnings" role="img"></canvas></div>
+          </div>
+        </section>
+
+        <!-- ══ TIMELINE + SIDE COLUMN ═════════════════════════════════ -->
+        <section class="split mt-4">
+          <div class="card card-pad" data-reveal>
+            <div class="between mb-4">
+              <div>
+                <h3>Project timeline</h3>
+                <p class="fs-xs muted">Next 90 days</p>
+              </div>
+              <a class="btn btn--sm btn--ghost" href="projects.html">
+                All projects <i data-lucide="arrow-right" class="nudge-x"></i>
+              </a>
+            </div>
+            <div id="timeline"></div>
+          </div>
+
+          <div class="col gap-4">
+            <div class="card card-pad" data-reveal>
+              <h3 class="mb-4">Quick actions</h3>
+              <div class="qa-grid">
+                <button class="qa-tile" type="button" data-quick="client">
+                  <i data-lucide="building-2"></i> Add client
+                </button>
+                <button class="qa-tile" type="button" data-quick="project">
+                  <i data-lucide="folder-plus"></i> New project
+                </button>
+                <button class="qa-tile" type="button" data-quick="task">
+                  <i data-lucide="circle-plus"></i> New task
+                </button>
+                <button class="qa-tile" type="button" data-quick="transaction">
+                  <i data-lucide="receipt"></i> Log income
+                </button>
+                <button class="qa-tile" type="button" data-quick="event">
+                  <i data-lucide="calendar-plus"></i> Schedule
+                </button>
+                <a class="qa-tile" href="finance.html">
+                  <i data-lucide="file-down"></i> Export
+                </a>
+              </div>
+            </div>
+
+            <div class="card card-pad" data-reveal>
+              <div class="between mb-3">
+                <h3>Upcoming</h3>
+                <a class="btn btn--sm btn--ghost" href="calendar.html">Calendar</a>
+              </div>
+              <div id="upcomingList"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ ACTIVITY + MEETINGS ════════════════════════════════════ -->
+        <section class="split-even mt-4">
+          <div class="card card-pad" data-reveal>
+            <div class="between mb-4">
+              <div>
+                <h3>Recent activity</h3>
+                <p class="fs-xs muted">Everything the team has touched</p>
+              </div>
+              <a class="btn btn--sm btn--ghost" href="activity.html">
+                View all <i data-lucide="arrow-right" class="nudge-x"></i>
+              </a>
+            </div>
+            <div class="feed" id="activityFeed"></div>
+          </div>
+
+          <div class="card card-pad" data-reveal>
+            <div class="between mb-4">
+              <div>
+                <h3>Meetings &amp; deadlines</h3>
+                <p class="fs-xs muted">Next two weeks</p>
+              </div>
+              <button class="btn btn--sm btn--secondary" type="button" data-quick="event">
+                <i data-lucide="plus"></i> Add
+              </button>
+            </div>
+            <div id="meetingList"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>

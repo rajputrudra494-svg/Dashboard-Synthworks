@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks activity log — an immutable record of every change anyone makes.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Activity</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <div class="page-head">
+          <div>
+            <h1>Activity log</h1>
+            <p class="sub">Every create, edit and delete anyone makes — written by the database itself.</p>
+          </div>
+
+          <div class="page-head-actions">
+            <span class="realtime-pill"><i></i><span>Connecting</span></span>
+            <button class="btn btn--secondary btn--sm" type="button" id="exportActivity">
+              <i data-lucide="download"></i> Export
+            </button>
+          </div>
+        </div>
+
+        <section class="stat-grid stagger mb-6" id="activityStats" aria-label="Activity summary"></section>
+
+        <section class="split">
+          <!-- Feed -->
+          <div>
+            <div class="card mb-4">
+              <div class="table-toolbar">
+                <div class="search-mini">
+                  <i data-lucide="search"></i>
+                  <input class="input" type="search" id="activitySearch"
+                         placeholder="Search the log…" aria-label="Search activity">
+                </div>
+
+                <select class="input" id="filterActor" aria-label="Filter by person" style="width:auto;min-width:150px">
+                  <option value="all">Everyone</option>
+                </select>
+
+                <select class="input" id="filterEntity" aria-label="Filter by type" style="width:auto;min-width:140px">
+                  <option value="all">All types</option>
+                  <option value="client">Clients</option>
+                  <option value="project">Projects</option>
+                  <option value="task">Tasks</option>
+                  <option value="transaction">Finance</option>
+                  <option value="event">Calendar</option>
+                </select>
+
+                <select class="input" id="filterAction" aria-label="Filter by action" style="width:auto;min-width:130px">
+                  <option value="all">All actions</option>
+                  <option value="created">Created</option>
+                  <option value="updated">Updated</option>
+                  <option value="completed">Completed</option>
+                  <option value="deleted">Deleted</option>
+                </select>
+
+                <span class="toolbar-spacer"></span>
+                <span class="result-count" id="activityCount"></span>
+              </div>
+
+              <div class="card-pad" id="activityFeed"></div>
+
+              <div class="pagination" id="activityPager" hidden>
+                <span class="result-count" id="pagerLabel"></span>
+                <button class="btn btn--sm btn--secondary" type="button" id="loadMore">
+                  <i data-lucide="chevron-down"></i> Load more
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Side column -->
+          <div class="col gap-4">
+            <div class="card card-pad" data-reveal>
+              <h3 class="mb-4">Activity heatmap</h3>
+              <p class="fs-xs muted mb-4">Changes per day over the last 12 weeks</p>
+              <div class="heatmap" id="heatmap"></div>
+              <div class="between mt-4">
+                <span class="fs-xs faint" id="heatTotal"></span>
+                <span class="heat-scale">
+                  Less <i></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i> More
+                </span>
+              </div>
+            </div>
+
+            <div class="card card-pad" data-reveal>
+              <h3 class="mb-4">Most active</h3>
+              <div class="hbar" id="mostActive"></div>
+            </div>
+
+            <div class="card card-pad" data-reveal>
+              <h3 class="mb-4">By type</h3>
+              <div class="chart-box chart-box--pie donut-wrap" style="height:200px;padding:0">
+                <canvas id="entityChart" role="img" aria-label="Activity by entity type"></canvas>
+              </div>
+              <div class="legend-stack" id="entityLegend" style="padding:var(--sp-4) 0 0"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="activity.js"></script>
+</body>
+</html>

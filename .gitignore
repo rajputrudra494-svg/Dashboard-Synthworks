@@ -1,0 +1,32 @@
+# Environment — never commit real credentials
+.env
+.env.local
+.env.*.local
+
+# Generated at build time by the Vercel/Netlify env-injection step
+env.js
+
+# Dependencies (none are required, but tooling may create these)
+node_modules/
+.pnpm-store/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build / deploy caches
+.vercel/
+.netlify/
+dist/
+.cache/
+
+# Logs
+*.log
+npm-debug.log*

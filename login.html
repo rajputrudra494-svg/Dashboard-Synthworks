@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="Sign in to the SynthWorks internal workspace.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Sign in</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#authPanel">Skip to sign-in form</a>
+
+  <div class="auth">
+    <!-- ══ LEFT: BRAND PANEL ════════════════════════════════════════════ -->
+    <section class="auth-visual" aria-hidden="true">
+      <a class="lp-brand flex items-center gap-3" href="index.html">
+        <span class="brand-mark">S</span>
+        <span class="brand-text">
+          <b data-company-name>SynthWorks</b>
+          <span>Studio OS</span>
+        </span>
+      </a>
+
+      <div>
+        <p class="eyebrow mb-4">Internal workspace</p>
+        <h2 class="auth-quote">
+          Everything the studio knows,<br>
+          <span class="text-gradient">in one live surface.</span>
+        </h2>
+        <p class="muted fs-sm mt-4" style="max-width:44ch">
+          Projects, clients, cash flow and the board — shared with the whole team
+          and updated the instant anyone makes a change.
+        </p>
+      </div>
+
+      <div class="auth-stats">
+        <div>
+          <b data-count="13">0</b>
+          <span>Live tables</span>
+        </div>
+        <div>
+          <b data-count="10">0</b>
+          <span>Modules</span>
+        </div>
+        <div>
+          <b>0<span class="fs-lg">ms</span></b>
+          <span>Refresh needed</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ RIGHT: FORMS ═════════════════════════════════════════════════ -->
+    <section class="auth-panel" id="authPanel">
+      <div class="auth-card">
+        <!-- Mobile brand (the left panel is hidden below 1024px) -->
+        <a class="lp-brand flex items-center gap-3 mb-6 only-mobile" href="index.html">
+          <span class="brand-mark">S</span>
+          <span class="brand-text">
+            <b data-company-name>SynthWorks</b>
+            <span>Studio OS</span>
+          </span>
+        </a>
+
+        <div class="auth-tabs" role="tablist" aria-label="Authentication mode">
+          <button class="is-active" type="button" role="tab" id="tabLogin"
+                  aria-selected="true" aria-controls="loginForm" data-tab="login">Sign in</button>
+          <button type="button" role="tab" id="tabSignup"
+                  aria-selected="false" aria-controls="signupForm" data-tab="signup">Create account</button>
+        </div>
+
+        <!-- ── SIGN IN ──────────────────────────────────────────────── -->
+        <div data-panel="login">
+          <header>
+            <h1>Welcome back</h1>
+            <p>Sign in to pick up where the team left off.</p>
+          </header>
+
+          <form class="auth-form" id="loginForm" novalidate>
+            <div class="field">
+              <label for="loginEmail">Work email</label>
+              <div class="input-group">
+                <i data-lucide="mail"></i>
+                <input type="email" id="loginEmail" name="email" autocomplete="username"
+                       placeholder="you@synthworks.com" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="loginPassword">Password</label>
+              <div class="input-group">
+                <i data-lucide="lock"></i>
+                <input type="password" id="loginPassword" name="password"
+                       autocomplete="current-password" placeholder="••••••••" required>
+                <button class="toggle-eye" type="button" data-toggle-password="loginPassword"
+                        aria-label="Show password"><i data-lucide="eye"></i></button>
+              </div>
+            </div>
+
+            <div class="between">
+              <label class="check">
+                <input type="checkbox" id="remember" name="remember" checked>
+                <span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="m5 13 4 4L19 7" stroke="currentColor"/></svg></span>
+                Remember me
+              </label>
+              <button class="btn btn--sm btn--ghost" type="button" data-goto="forgot">Forgot password?</button>
+            </div>
+
+            <div class="field-error" id="loginError" hidden></div>
+
+            <button class="btn btn--primary btn--block btn--lg" type="submit" id="loginSubmit">
+              Sign in <i data-lucide="arrow-right"></i>
+            </button>
+          </form>
+
+          <p class="auth-alt">
+            No account yet?
+            <button class="btn btn--sm btn--ghost link-underline" type="button" data-tab="signup">Create one</button>
+          </p>
+        </div>
+
+        <!-- ── SIGN UP ──────────────────────────────────────────────── -->
+        <div data-panel="signup" hidden>
+          <header>
+            <h1>Join the workspace</h1>
+            <p>You'll get full access to every project the studio is running.</p>
+          </header>
+
+          <form class="auth-form" id="signupForm" novalidate>
+            <div class="field">
+              <label for="signupName">Full name</label>
+              <div class="input-group">
+                <i data-lucide="user"></i>
+                <input type="text" id="signupName" name="fullName" autocomplete="name"
+                       placeholder="Rudra Rajput" required minlength="2">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="signupRole">Job title</label>
+              <div class="input-group">
+                <i data-lucide="briefcase"></i>
+                <input type="text" id="signupRole" name="jobTitle" autocomplete="organization-title"
+                       placeholder="Product Designer">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="signupEmail">Work email</label>
+              <div class="input-group">
+                <i data-lucide="mail"></i>
+                <input type="email" id="signupEmail" name="email" autocomplete="username"
+                       placeholder="you@synthworks.com" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="signupPassword">Password</label>
+              <div class="input-group">
+                <i data-lucide="lock"></i>
+                <input type="password" id="signupPassword" name="password"
+                       autocomplete="new-password" placeholder="At least 8 characters"
+                       required minlength="8">
+                <button class="toggle-eye" type="button" data-toggle-password="signupPassword"
+                        aria-label="Show password"><i data-lucide="eye"></i></button>
+              </div>
+              <div class="strength" id="strengthMeter" data-level="0" aria-hidden="true">
+                <i></i><i></i><i></i><i></i>
+              </div>
+              <span class="hint" id="strengthHint">Use 8+ characters with a mix of letters, numbers and symbols.</span>
+            </div>
+
+            <div class="field-error" id="signupError" hidden></div>
+
+            <button class="btn btn--primary btn--block btn--lg" type="submit" id="signupSubmit">
+              Create account <i data-lucide="arrow-right"></i>
+            </button>
+          </form>
+
+          <p class="auth-alt">
+            Already have an account?
+            <button class="btn btn--sm btn--ghost link-underline" type="button" data-tab="login">Sign in</button>
+          </p>
+        </div>
+
+        <!-- ── FORGOT PASSWORD ──────────────────────────────────────── -->
+        <div data-panel="forgot" hidden>
+          <header>
+            <h1>Reset your password</h1>
+            <p>We'll email you a secure link to choose a new one.</p>
+          </header>
+
+          <form class="auth-form" id="forgotForm" novalidate>
+            <div class="field">
+              <label for="forgotEmail">Work email</label>
+              <div class="input-group">
+                <i data-lucide="mail"></i>
+                <input type="email" id="forgotEmail" name="email" autocomplete="username"
+                       placeholder="you@synthworks.com" required>
+              </div>
+            </div>
+
+            <div class="field-error" id="forgotError" hidden></div>
+
+            <button class="btn btn--primary btn--block btn--lg" type="submit" id="forgotSubmit">
+              Send reset link <i data-lucide="send"></i>
+            </button>
+            <button class="btn btn--ghost btn--block" type="button" data-goto="login">
+              <i data-lucide="arrow-left"></i> Back to sign in
+            </button>
+          </form>
+        </div>
+
+        <!-- ── SET NEW PASSWORD (arrives from the emailed link) ─────── -->
+        <div data-panel="recover" hidden>
+          <header>
+            <h1>Choose a new password</h1>
+            <p>Make it something only you would guess.</p>
+          </header>
+
+          <form class="auth-form" id="recoverForm" novalidate>
+            <div class="field">
+              <label for="recoverPassword">New password</label>
+              <div class="input-group">
+                <i data-lucide="lock"></i>
+                <input type="password" id="recoverPassword" name="password"
+                       autocomplete="new-password" placeholder="At least 8 characters"
+                       required minlength="8">
+                <button class="toggle-eye" type="button" data-toggle-password="recoverPassword"
+                        aria-label="Show password"><i data-lucide="eye"></i></button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="recoverConfirm">Confirm password</label>
+              <div class="input-group">
+                <i data-lucide="lock-keyhole"></i>
+                <input type="password" id="recoverConfirm" name="confirm"
+                       autocomplete="new-password" placeholder="Repeat it" required minlength="8">
+              </div>
+            </div>
+
+            <div class="field-error" id="recoverError" hidden></div>
+
+            <button class="btn btn--primary btn--block btn--lg" type="submit" id="recoverSubmit">
+              Update password <i data-lucide="check"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- ── EMAIL SENT / CONFIRM ─────────────────────────────────── -->
+        <div data-panel="sent" hidden>
+          <div class="success-mark success-mark--brand">
+            <svg viewBox="0 0 60 60" aria-hidden="true">
+              <circle class="sm-circle" cx="30" cy="30" r="26.5"></circle>
+              <path class="sm-check" d="M18 31.5 L26.5 40 L42 23"></path>
+            </svg>
+          </div>
+          <header class="mt-6" style="text-align:center">
+            <h1 id="sentTitle">Check your inbox</h1>
+            <p id="sentBody">We've sent a link to your email address.</p>
+          </header>
+          <button class="btn btn--secondary btn--block mt-6" type="button" data-goto="login">
+            <i data-lucide="arrow-left"></i> Back to sign in
+          </button>
+        </div>
+
+        <div class="auth-sep">Internal use only</div>
+        <p class="fs-xs faint" style="text-align:center">
+          Trouble signing in? Ask an admin to check your account in Supabase.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Theme toggle floats over the auth screen -->
+  <button class="icon-btn theme-toggle" type="button" id="themeToggle"
+          aria-label="Toggle theme" data-tip="Theme"></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>

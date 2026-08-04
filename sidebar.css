@@ -1,0 +1,272 @@
+/* =============================================================================
+   SynthWorks — sidebar.css
+   Sticky, collapsible primary navigation. On tablet/mobile the same markup
+   becomes an off-canvas drawer (see responsive.css).
+   ========================================================================== */
+
+.app-sidebar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sidebar);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100svh;
+  padding: var(--sp-4) var(--sp-3);
+  border-right: 1px solid var(--border);
+  background: var(--glass);
+  overflow: hidden;
+}
+
+/* Vertical brand glow along the trailing edge. */
+.app-sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0; right: -1px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--accent) 28%, var(--primary) 72%, transparent);
+  opacity: .35;
+}
+
+/* ── Brand ────────────────────────────────────────────────────────────────── */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-2) var(--sp-5);
+  min-height: 60px;
+}
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--r-sm);
+  background: var(--grad-brand);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -.04em;
+  box-shadow: var(--shadow-glow);
+  transition: transform var(--t-mid) var(--ease-spring);
+}
+.sidebar-brand:hover .brand-mark { transform: rotate(-8deg) scale(1.06); }
+
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.brand-text b {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  color: var(--text);
+}
+.brand-text span {
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ── Nav ──────────────────────────────────────────────────────────────────── */
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: var(--sp-4);
+  margin-inline: calc(var(--sp-1) * -1);
+  padding-inline: var(--sp-1);
+}
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+
+.nav-label {
+  padding: var(--sp-5) var(--sp-3) var(--sp-2);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.nav-label:first-child { padding-top: var(--sp-1); }
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 42px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-sm);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color var(--t-fast) var(--ease-out),
+              background var(--t-fast) var(--ease-out),
+              transform var(--t-fast) var(--ease-out);
+}
+.nav-item [data-lucide] { flex-shrink: 0; transition: transform var(--t-mid) var(--ease-spring); }
+.nav-item span { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+
+.nav-item:hover {
+  background: var(--card-hover);
+  color: var(--text);
+  transform: translateX(3px);
+}
+.nav-item:hover [data-lucide] { transform: scale(1.12); }
+
+.nav-item.is-active {
+  color: var(--text);
+  background: linear-gradient(90deg, var(--brand-soft), transparent 88%);
+  font-weight: 600;
+}
+.nav-item.is-active [data-lucide] { color: var(--accent); }
+
+/* Active indicator rail. */
+.nav-item.is-active::before {
+  content: '';
+  position: absolute;
+  left: -4px; top: 50%;
+  width: 3px; height: 22px;
+  transform: translateY(-50%);
+  border-radius: var(--r-full);
+  background: var(--grad-brand);
+  box-shadow: 0 0 12px var(--accent);
+  animation: rail-in var(--t-mid) var(--ease-spring) both;
+}
+
+/* Count badge (pending tasks, unread activity…). */
+.nav-badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--r-full);
+  background: var(--brand-soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.nav-badge.is-danger { background: var(--danger-soft); color: var(--danger); }
+
+/* ── Footer: workspace card + collapse toggle ─────────────────────────────── */
+.sidebar-foot {
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.sidebar-upsell {
+  position: relative;
+  padding: var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--grad-card);
+  overflow: hidden;
+}
+.sidebar-upsell > * { position: relative; }
+.sidebar-upsell b { display: block; font-size: var(--fs-sm); font-weight: 600; }
+.sidebar-upsell p { margin: 2px 0 var(--sp-3); font-size: var(--fs-xs); color: var(--text-muted); }
+
+.storage-meter {
+  height: 5px;
+  border-radius: var(--r-full);
+  background: var(--track);
+  overflow: hidden;
+}
+.storage-meter i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--grad-brand);
+  transition: width var(--t-slow) var(--ease-out);
+}
+
+.sidebar-collapse {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 42px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-sm);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.sidebar-collapse:hover { background: var(--card-hover); color: var(--text); }
+.sidebar-collapse [data-lucide] { transition: transform var(--t-mid) var(--ease-out); }
+
+.nav-item--logout:hover { background: var(--danger-soft); color: var(--danger); }
+.nav-item--logout:hover [data-lucide] { color: var(--danger); }
+
+/* =============================================================================
+   COLLAPSED STATE
+   Text fades out, icons centre, and tooltips take over as the labels.
+   ========================================================================== */
+.app.is-collapsed .brand-text,
+.app.is-collapsed .nav-item span:not(.nav-badge),
+.app.is-collapsed .nav-label,
+.app.is-collapsed .sidebar-upsell,
+.app.is-collapsed .sidebar-collapse span {
+  opacity: 0;
+  width: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.app.is-collapsed .app-sidebar { padding-inline: var(--sp-2); }
+.app.is-collapsed .sidebar-brand { justify-content: center; padding-inline: 0; }
+.app.is-collapsed .nav-item,
+.app.is-collapsed .sidebar-collapse { justify-content: center; padding-inline: 0; }
+.app.is-collapsed .nav-item:hover { transform: none; }
+.app.is-collapsed .nav-badge {
+  position: absolute;
+  top: 4px; right: 6px;
+  min-width: 16px; height: 16px;
+  font-size: 9px;
+  padding: 0 4px;
+}
+.app.is-collapsed .sidebar-collapse [data-lucide] { transform: rotate(180deg); }
+
+/* Tooltip label shown on hover while collapsed. */
+.app.is-collapsed .nav-item::after {
+  content: attr(data-label);
+  position: absolute;
+  left: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-6px);
+  padding: 6px var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-md);
+  color: var(--text);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-fast) var(--ease-out), transform var(--t-fast) var(--ease-out);
+  z-index: 5;
+}
+.app.is-collapsed .nav-item:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+
+/* Backdrop behind the mobile drawer. */
+.sidebar-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-sidebar) - 1);
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--t-mid) var(--ease-out), visibility var(--t-mid);
+}
+.sidebar-scrim.is-open { opacity: 1; visibility: visible; }

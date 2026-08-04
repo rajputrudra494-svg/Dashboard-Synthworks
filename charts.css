@@ -1,0 +1,365 @@
+/* =============================================================================
+   SynthWorks — charts.css
+   Chart panels, legends, tooltips, sparklines, the calendar grid and other
+   data-visualisation surfaces.
+   ========================================================================== */
+
+/* =============================================================================
+   1. CHART PANEL
+   ========================================================================== */
+.chart-card { display: flex; flex-direction: column; overflow: hidden; }
+
+.chart-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-5) var(--sp-5) var(--sp-3);
+}
+.chart-head h3 { font-size: var(--fs-md); font-weight: 600; }
+.chart-head p { margin-top: 2px; font-size: var(--fs-xs); color: var(--text-muted); }
+.chart-head .chart-total {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Canvas wrapper — a fixed-height, position:relative box is what lets
+   Chart.js resize correctly with maintainAspectRatio:false. */
+.chart-box {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  padding: 0 var(--sp-4) var(--sp-4);
+}
+.chart-box canvas { width: 100% !important; }
+.chart-box--sm  { height: 220px; }
+.chart-box--lg  { height: 380px; }
+.chart-box--pie { height: 280px; display: grid; place-items: center; }
+
+/* =============================================================================
+   2. LEGEND  (custom HTML legend — Chart.js's built-in one is disabled)
+   ========================================================================== */
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: 0 var(--sp-5) var(--sp-5);
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--t-fast), opacity var(--t-fast);
+}
+.legend-item:hover { color: var(--text); }
+.legend-item.is-off { opacity: .4; text-decoration: line-through; }
+.legend-item i {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.legend-item b {
+  margin-left: 3px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* Legend laid out as a vertical list beside a doughnut. */
+.legend-stack { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-5); }
+.legend-stack .legend-item { justify-content: space-between; width: 100%; font-size: var(--fs-sm); }
+.legend-stack .legend-item > span { display: inline-flex; align-items: center; gap: var(--sp-2); min-width: 0; }
+
+/* Doughnut with a value in the middle. */
+.donut-wrap { position: relative; display: grid; place-items: center; }
+.donut-center {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+.donut-center b {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  letter-spacing: -.035em;
+  font-variant-numeric: tabular-nums;
+}
+.donut-center span { font-size: var(--fs-xs); color: var(--text-muted); }
+
+/* =============================================================================
+   3. CUSTOM CHART.JS TOOLTIP
+   Rendered as a real DOM node by charts.js so it can be themed with CSS vars.
+   ========================================================================== */
+.chart-tip {
+  position: absolute;
+  z-index: var(--z-sticky);
+  min-width: 130px;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--glass-strong);
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -108%);
+  transition: opacity var(--t-fast) var(--ease-out), transform var(--t-fast) var(--ease-out);
+}
+.chart-tip.is-on { opacity: 1; }
+.chart-tip .tip-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 5px;
+}
+.chart-tip .tip-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+}
+.chart-tip .tip-row i { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.chart-tip .tip-row b { margin-left: auto; color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* =============================================================================
+   4. SPARKLINES & MINI BARS
+   ========================================================================== */
+.spark { position: relative; width: 100%; height: 40px; }
+.spark canvas { position: absolute; inset: 0; }
+
+.bar-track { display: flex; align-items: flex-end; gap: 3px; height: 44px; }
+.bar-track i {
+  flex: 1;
+  min-height: 3px;
+  border-radius: 2px 2px 0 0;
+  background: var(--brand-soft);
+  transition: background var(--t-fast), height .8s var(--ease-out);
+}
+.bar-track i.is-peak { background: var(--grad-brand); }
+
+/* Horizontal comparison bars (analytics page). */
+.hbar { display: flex; flex-direction: column; gap: var(--sp-3); }
+.hbar-row { display: grid; grid-template-columns: minmax(80px, 130px) 1fr auto; align-items: center; gap: var(--sp-3); font-size: var(--fs-xs); }
+.hbar-row > span:first-child { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hbar-bar { height: 8px; border-radius: var(--r-full); background: var(--track); overflow: hidden; }
+.hbar-bar i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--grad-brand);
+  transition: width 1s var(--ease-out);
+}
+.hbar-row > b { font-variant-numeric: tabular-nums; color: var(--text); }
+
+/* =============================================================================
+   5. CALENDAR
+   ========================================================================== */
+.cal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.cal-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  min-width: 190px;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--card);
+}
+.cal-dow {
+  padding: var(--sp-3) var(--sp-2);
+  border-bottom: 1px solid var(--border);
+  background: var(--glass-strong);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+}
+.cal-day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 118px;
+  padding: var(--sp-2);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease-out);
+}
+.cal-day:nth-child(7n) { border-right: 0; }
+.cal-day:hover { background: var(--card-hover); }
+.cal-day.is-outside { opacity: .38; }
+.cal-day.is-weekend { background: color-mix(in srgb, var(--bg-3) 45%, transparent); }
+.cal-day.is-today { background: var(--brand-soft); }
+.cal-day.is-selected { box-shadow: inset 0 0 0 2px var(--accent); z-index: 1; }
+.cal-day .cal-dots { display: none; gap: 2px; flex-wrap: wrap; margin-top: auto; }
+.cal-day.is-today .cal-num {
+  background: var(--grad-brand);
+  color: #fff;
+  box-shadow: 0 4px 12px -4px var(--primary);
+}
+.cal-num {
+  display: grid;
+  place-items: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.cal-event {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  border-radius: var(--r-xs);
+  background: var(--card-hover);
+  border-left: 3px solid var(--accent);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: transform var(--t-fast) var(--ease-out), background var(--t-fast);
+}
+.cal-event:hover { transform: translateX(2px); background: var(--brand-soft); color: var(--text); }
+.cal-event.is-deadline  { border-left-color: var(--danger); }
+.cal-event.is-milestone { border-left-color: var(--warning); }
+.cal-event.is-reminder  { border-left-color: var(--info); }
+.cal-event.is-meeting   { border-left-color: var(--accent); }
+.cal-more { padding-left: 6px; font-size: 10px; color: var(--text-faint); font-weight: 600; }
+
+/* Agenda list beside the grid. */
+.agenda-item {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+}
+.agenda-item + .agenda-item { border-top: 1px solid var(--border); }
+.agenda-time {
+  width: 62px;
+  flex-shrink: 0;
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.agenda-bar { width: 3px; border-radius: var(--r-full); background: var(--accent); flex-shrink: 0; }
+.agenda-item b { display: block; font-size: var(--fs-sm); font-weight: 600; }
+.agenda-item span { font-size: var(--fs-xs); color: var(--text-muted); }
+
+/* =============================================================================
+   6. HEATMAP  (contribution-style activity grid)
+   ========================================================================== */
+.heatmap {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+  overflow-x: auto;
+  padding-bottom: var(--sp-2);
+}
+.heat-cell {
+  width: 13px; height: 13px;
+  border-radius: 3px;
+  background: var(--track);
+  transition: transform var(--t-fast) var(--ease-spring), background var(--t-fast);
+}
+.heat-cell:hover { transform: scale(1.35); }
+.heat-cell[data-level='1'] { background: rgba(124, 58, 237, .3); }
+.heat-cell[data-level='2'] { background: rgba(124, 58, 237, .52); }
+.heat-cell[data-level='3'] { background: rgba(124, 58, 237, .76); }
+.heat-cell[data-level='4'] { background: var(--accent); box-shadow: 0 0 8px -1px var(--accent); }
+
+.heat-scale { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-faint); }
+.heat-scale i { width: 11px; height: 11px; border-radius: 3px; background: var(--track); }
+
+/* =============================================================================
+   7. TIMELINE / GANTT
+   ========================================================================== */
+.gantt { display: flex; flex-direction: column; gap: var(--sp-2); }
+.gantt-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 190px) 1fr;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.gantt-label { min-width: 0; }
+.gantt-label b { display: block; font-size: var(--fs-sm); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gantt-label span { font-size: var(--fs-xs); color: var(--text-muted); }
+.gantt-track {
+  position: relative;
+  height: 30px;
+  border-radius: var(--r-xs);
+  background: var(--track);
+  overflow: hidden;
+}
+.gantt-bar {
+  position: absolute;
+  top: 4px; bottom: 4px;
+  border-radius: var(--r-xs);
+  background: var(--grad-brand);
+  box-shadow: 0 4px 14px -6px var(--primary);
+  transition: left .8s var(--ease-out), width .8s var(--ease-out);
+  cursor: pointer;
+}
+.gantt-bar::after {
+  content: attr(data-pct);
+  position: absolute;
+  right: 7px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+.gantt-bar.is-late { background: linear-gradient(90deg, #dc2626, #f87171); box-shadow: 0 4px 14px -6px var(--danger); }
+.gantt-bar.is-done { background: linear-gradient(90deg, #16a34a, #4ade80); box-shadow: 0 4px 14px -6px var(--success); }
+
+/* "Today" marker line across the gantt. */
+.gantt-today {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--warning);
+  opacity: .7;
+  z-index: 1;
+}
+.gantt-scale {
+  display: grid;
+  grid-template-columns: minmax(120px, 190px) 1fr;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.gantt-scale > div:last-child { display: flex; justify-content: space-between; }

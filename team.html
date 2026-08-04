@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks team — who's online, what they're working on and how the load is distributed.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Team</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <div class="page-head">
+          <div>
+            <h1>Team</h1>
+            <p class="sub">Who's around, what they're carrying and where the load sits.</p>
+          </div>
+
+          <div class="page-head-actions">
+            <span class="realtime-pill"><i></i><span>Connecting</span></span>
+            <button class="btn btn--secondary btn--sm" type="button" id="inviteBtn">
+              <i data-lucide="user-plus"></i> Invite
+            </button>
+          </div>
+        </div>
+
+        <section class="stat-grid stagger mb-6" id="teamStats" aria-label="Team summary"></section>
+
+        <section class="split-even mb-6">
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Workload</h3>
+                <p>Open tasks per person</p>
+              </div>
+            </div>
+            <div class="chart-box chart-box--sm">
+              <canvas id="workloadChart" role="img" aria-label="Open tasks per team member"></canvas>
+            </div>
+          </div>
+
+          <div class="card card-pad" data-reveal>
+            <h3 class="mb-4">Completion leaderboard</h3>
+            <div class="hbar" id="leaderboard"></div>
+          </div>
+        </section>
+
+        <div class="between mb-4">
+          <div class="segmented" id="viewSwitch" role="group" aria-label="View mode">
+            <button type="button" class="is-active" data-view="grid"><i data-lucide="layout-grid"></i> Cards</button>
+            <button type="button" data-view="table"><i data-lucide="list"></i> Table</button>
+          </div>
+          <span class="realtime-pill is-live" id="onlinePill"><i></i><span>0 online</span></span>
+        </div>
+
+        <section id="teamGrid" class="grid-auto" aria-label="Team members"></section>
+        <section id="teamTable" aria-label="Team table" hidden></section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="team.js"></script>
+</body>
+</html>

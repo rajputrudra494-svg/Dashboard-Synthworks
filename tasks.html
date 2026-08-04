@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks task board — a shared kanban that updates for everyone in realtime.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Tasks</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <div class="page-head">
+          <div>
+            <h1>Task board</h1>
+            <p class="sub">Drag a card and everyone sees it move. No refresh required.</p>
+          </div>
+
+          <div class="page-head-actions">
+            <span class="realtime-pill"><i></i><span>Connecting</span></span>
+            <button class="btn btn--primary btn--sm" type="button" id="addTask">
+              <i data-lucide="plus"></i> New task
+            </button>
+          </div>
+        </div>
+
+        <section class="stat-grid stagger mb-6" id="taskStats" aria-label="Task summary"></section>
+
+        <!-- Sticky filter bar -->
+        <div class="sticky-bar">
+          <div class="flex wrap items-center gap-2">
+            <div class="search-mini" style="position:relative;flex:1 1 220px;max-width:320px">
+              <i data-lucide="search"></i>
+              <input class="input" type="search" id="taskSearch" placeholder="Search tasks…"
+                     aria-label="Search tasks" style="padding-left:38px">
+            </div>
+
+            <select class="input" id="filterProject" aria-label="Filter by project" style="width:auto;min-width:150px">
+              <option value="all">All projects</option>
+            </select>
+
+            <select class="input" id="filterAssignee" aria-label="Filter by assignee" style="width:auto;min-width:150px">
+              <option value="all">Everyone</option>
+              <option value="me">Assigned to me</option>
+              <option value="none">Unassigned</option>
+            </select>
+
+            <select class="input" id="filterPriority" aria-label="Filter by priority" style="width:auto;min-width:130px">
+              <option value="all">Any priority</option>
+              <option value="urgent">Urgent</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+
+            <span class="toolbar-spacer" style="flex:1"></span>
+            <span class="result-count" id="taskCount"></span>
+            <button class="btn btn--sm btn--ghost" type="button" id="clearFilters">
+              <i data-lucide="x"></i> Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Kanban -->
+        <section class="kanban" id="kanban" aria-label="Kanban board"></section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="tasks.js"></script>
+</body>
+</html>

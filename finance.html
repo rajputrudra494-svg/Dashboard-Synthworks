@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks finance — income, expenses, profit and invoices with CSV and PDF export.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Finance</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <div class="page-head">
+          <div>
+            <h1>Finance</h1>
+            <p class="sub">Income, expenses and margin across the whole studio.</p>
+          </div>
+
+          <div class="page-head-actions">
+            <span class="realtime-pill"><i></i><span>Connecting</span></span>
+            <button class="btn btn--secondary btn--sm" type="button" id="exportCsv">
+              <i data-lucide="file-spreadsheet"></i> CSV
+            </button>
+            <button class="btn btn--secondary btn--sm" type="button" id="exportPdf">
+              <i data-lucide="file-text"></i> PDF
+            </button>
+            <button class="btn btn--primary btn--sm" type="button" id="addTransaction">
+              <i data-lucide="plus"></i> Add transaction
+            </button>
+          </div>
+        </div>
+
+        <!-- Date range -->
+        <div class="card card-pad mb-6" data-reveal>
+          <div class="flex wrap items-end gap-3">
+            <div class="segmented" id="rangePreset" role="group" aria-label="Date range preset">
+              <button type="button" data-preset="7">7 days</button>
+              <button type="button" data-preset="30" class="is-active">30 days</button>
+              <button type="button" data-preset="90">90 days</button>
+              <button type="button" data-preset="365">1 year</button>
+              <button type="button" data-preset="all">All time</button>
+            </div>
+
+            <div class="field" style="flex:0 0 auto">
+              <label for="dateFrom">From</label>
+              <input type="date" id="dateFrom" aria-label="Start date">
+            </div>
+            <div class="field" style="flex:0 0 auto">
+              <label for="dateTo">To</label>
+              <input type="date" id="dateTo" aria-label="End date">
+            </div>
+
+            <button class="btn btn--secondary btn--sm" type="button" id="applyRange">
+              <i data-lucide="filter"></i> Apply
+            </button>
+
+            <span class="toolbar-spacer" style="flex:1"></span>
+            <span class="fs-xs muted" id="rangeLabel"></span>
+          </div>
+        </div>
+
+        <!-- KPI tiles -->
+        <section class="stat-grid stagger mb-6" id="financeStats" aria-label="Finance summary"></section>
+
+        <!-- Charts -->
+        <section class="split mb-4">
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Cash flow</h3>
+                <p>Income vs expenses over the selected range</p>
+              </div>
+              <div class="segmented" id="cashflowType" role="group" aria-label="Chart type">
+                <button type="button" class="is-active" data-chart="area">Area</button>
+                <button type="button" data-chart="bar">Bar</button>
+              </div>
+            </div>
+            <div class="chart-box"><canvas id="cashflowChart" role="img" aria-label="Cash flow chart"></canvas></div>
+            <div class="chart-legend" id="cashflowLegend"></div>
+          </div>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Expenses by category</h3>
+                <p>Where the money goes</p>
+              </div>
+            </div>
+            <div class="chart-box chart-box--pie donut-wrap">
+              <canvas id="categoryChart" role="img" aria-label="Expenses by category"></canvas>
+              <div class="donut-center">
+                <b id="categoryTotal">—</b>
+                <span>Expenses</span>
+              </div>
+            </div>
+            <div class="legend-stack" id="categoryLegend"></div>
+          </div>
+        </section>
+
+        <section class="split-even mb-4">
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Daily earnings</h3>
+                <p>Last 30 days</p>
+              </div>
+              <b class="chart-total" id="dailyTotal">—</b>
+            </div>
+            <div class="chart-box chart-box--sm"><canvas id="dailyChart" role="img" aria-label="Daily earnings"></canvas></div>
+          </div>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Yearly comparison</h3>
+                <p>Revenue by month, this year vs last</p>
+              </div>
+            </div>
+            <div class="chart-box chart-box--sm"><canvas id="yearlyChart" role="img" aria-label="Yearly comparison"></canvas></div>
+            <div class="chart-legend" id="yearlyLegend"></div>
+          </div>
+        </section>
+
+        <!-- Invoice health -->
+        <section class="split-even mb-6">
+          <div class="card card-pad" data-reveal>
+            <h3 class="mb-4">Invoice status</h3>
+            <div id="invoiceHealth"></div>
+          </div>
+
+          <div class="card card-pad" data-reveal>
+            <h3 class="mb-4">Top revenue clients</h3>
+            <div class="hbar" id="topClients"></div>
+          </div>
+        </section>
+
+        <!-- Transactions table -->
+        <section id="financeTable" aria-label="Transactions"></section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="finance.js"></script>
+</body>
+</html>

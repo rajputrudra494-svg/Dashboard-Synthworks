@@ -1,0 +1,283 @@
+/* =============================================================================
+   SynthWorks — responsive.css
+   Loaded LAST so its overrides win.
+
+   Breakpoint ladder (mobile-first base lives in the other files; these are the
+   deliberate adaptations):
+
+     ≥ 2160px   4K / ultrawide
+     ≥ 1600px   large desktop
+     ≤ 1440px   laptop
+     ≤ 1200px   small laptop  — sidebar auto-collapses
+     ≤ 1024px   tablet landscape — sidebar becomes a drawer
+     ≤ 860px    tablet portrait — tables become card lists
+     ≤ 640px    mobile landscape
+     ≤ 420px    mobile portrait
+   ========================================================================== */
+
+/* =============================================================================
+   4K / ULTRAWIDE — more breathing room, larger canvas
+   ========================================================================== */
+@media (min-width: 2160px) {
+  :root {
+    --page-max: 2040px;
+    --sidebar-w: 300px;
+    --topbar-h: 76px;
+  }
+  .stat-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .chart-box { height: 360px; }
+  .chart-box--lg { height: 460px; }
+  .cal-day { min-height: 150px; }
+}
+
+/* =============================================================================
+   LARGE DESKTOP
+   ========================================================================== */
+@media (min-width: 1600px) and (max-width: 2159px) {
+  .kanban { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* =============================================================================
+   LAPTOP — ≤ 1440px
+   ========================================================================== */
+@media (max-width: 1440px) {
+  :root { --sidebar-w: 244px; }
+  .split { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+  .kanban { grid-template-columns: repeat(4, minmax(238px, 1fr)); }
+}
+
+/* =============================================================================
+   SMALL LAPTOP — ≤ 1200px
+   The sidebar collapses to icons automatically; the user can still expand it.
+   ========================================================================== */
+@media (max-width: 1200px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .kanban {
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+    overflow-x: auto;
+    padding-bottom: var(--sp-3);
+    scroll-snap-type: x proximity;
+  }
+  .kanban-col { scroll-snap-align: start; }
+  .topbar-clock { display: none; }
+}
+
+/* =============================================================================
+   TABLET LANDSCAPE — ≤ 1024px
+   Sidebar leaves the grid and becomes an off-canvas drawer.
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .app,
+  .app.is-collapsed { grid-template-columns: minmax(0, 1fr); }
+
+  .app-sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: min(84vw, 300px);
+    height: 100dvh;
+    transform: translateX(-102%);
+    transition: transform var(--t-slow) var(--ease-out);
+    background: var(--glass-strong);
+    box-shadow: var(--shadow-lg);
+  }
+  .app.is-drawer-open .app-sidebar { transform: none; }
+
+  /* The collapsed rules must not apply while it is a drawer. */
+  .app.is-collapsed .brand-text,
+  .app.is-collapsed .nav-item span:not(.nav-badge),
+  .app.is-collapsed .nav-label,
+  .app.is-collapsed .sidebar-upsell,
+  .app.is-collapsed .sidebar-collapse span {
+    opacity: 1;
+    width: auto;
+    pointer-events: auto;
+    overflow: visible;
+  }
+  .app.is-collapsed .app-sidebar { padding-inline: var(--sp-3); }
+  .app.is-collapsed .sidebar-brand,
+  .app.is-collapsed .nav-item,
+  .app.is-collapsed .sidebar-collapse { justify-content: flex-start; padding-inline: var(--sp-3); }
+  .app.is-collapsed .sidebar-brand { padding-inline: var(--sp-2); }
+  .app.is-collapsed .nav-item::after { display: none; }
+  .app.is-collapsed .nav-badge { position: static; min-width: 20px; height: 20px; font-size: 10px; padding: 0 6px; }
+
+  .sidebar-collapse { display: none; }
+  .topbar-toggle { display: inline-flex; }
+
+  .page { padding-top: var(--sp-5); padding-bottom: var(--sp-12); }
+  .cursor-glow { display: none; }
+  .fx-particles { display: none; }        /* save battery on touch devices */
+
+  .auth { grid-template-columns: minmax(0, 1fr); }
+  .auth-visual { display: none; }
+}
+
+/* =============================================================================
+   TABLET PORTRAIT — ≤ 860px
+   Tables switch to the stacked card list.
+   ========================================================================== */
+@media (max-width: 860px) {
+  .table-scroll { display: none; }
+  .card-list { display: flex; }
+  .table-toolbar { padding: var(--sp-3); }
+  .table-toolbar .search-mini { flex-basis: 100%; max-width: none; order: -1; }
+  .pagination { padding: var(--sp-3); justify-content: center; }
+  .pagination .result-count { width: 100%; text-align: center; order: 2; }
+
+  .split-even { grid-template-columns: minmax(0, 1fr); }
+  .stat-grid  { grid-template-columns: repeat(auto-fit, minmax(min(100%, 178px), 1fr)); gap: var(--sp-3); }
+  .stat { padding: var(--sp-4); }
+  .stat-value { font-size: clamp(1.3rem, 4.5vw, 1.6rem); }
+
+  .kanban { grid-template-columns: repeat(4, 82vw); gap: var(--sp-3); }
+  .kanban-list { max-height: none; }
+
+  .modal { max-height: 92svh; }
+  .modal-head, .modal-body { padding: var(--sp-4); }
+  .modal-foot { padding: var(--sp-3) var(--sp-4); }
+  .drawer { width: 100%; }
+
+  .cal-day { min-height: 92px; padding: 5px; }
+  .cal-event { font-size: 10px; padding: 2px 4px; }
+  .gantt-row, .gantt-scale { grid-template-columns: minmax(96px, 130px) 1fr; }
+}
+
+/* =============================================================================
+   MOBILE LANDSCAPE — ≤ 640px
+   ========================================================================== */
+@media (max-width: 640px) {
+  :root { --topbar-h: 60px; }
+
+  .page { padding-inline: var(--sp-4); }
+
+  /* Search collapses to an icon that opens the command palette. */
+  .topbar-search { display: none; }
+  .topbar-search-btn { display: inline-flex !important; }
+  .topbar-actions { gap: 2px; }
+  .profile-chip .meta { display: none; }
+  .profile-chip { padding: 3px; }
+
+  .page-head { align-items: flex-start; }
+  .page-head-actions { width: 100%; }
+  .page-head-actions .btn { flex: 1 1 auto; }
+
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-auto { grid-template-columns: minmax(0, 1fr); }
+
+  .chart-box       { height: 240px; padding-inline: var(--sp-2); }
+  .chart-box--lg   { height: 280px; }
+  .chart-head      { padding: var(--sp-4) var(--sp-4) var(--sp-2); }
+  .chart-legend    { padding: 0 var(--sp-4) var(--sp-4); gap: var(--sp-3); }
+
+  .kanban { grid-template-columns: repeat(4, 86vw); }
+
+  .toast-stack {
+    top: auto;
+    bottom: var(--sp-4);
+    left: var(--sp-3);
+    right: var(--sp-3);
+    width: auto;
+    align-items: stretch;
+  }
+  .toast { animation-name: page-in; }
+  .toast.is-leaving { animation: fade-in .2s reverse forwards; }
+
+  .modal--command { margin-top: 6vh; }
+  .command-list { max-height: 58vh; }
+
+  /* Calendar drops to a compact 7-column dot grid. */
+  .cal-day { min-height: 62px; }
+  .cal-event { display: none; }
+  .cal-day .cal-dots { display: flex; gap: 2px; flex-wrap: wrap; }
+
+  .setting-row { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
+  .setting-row > *:last-child { width: 100%; }
+  .switch { align-self: flex-start; }
+
+  .auth-panel { padding: var(--sp-6) var(--sp-4); }
+  .field-row { grid-template-columns: minmax(0, 1fr); }
+
+  .heatmap { grid-auto-flow: column; }
+  .heat-cell { width: 10px; height: 10px; }
+}
+
+/* =============================================================================
+   MOBILE PORTRAIT — ≤ 420px
+   ========================================================================== */
+@media (max-width: 420px) {
+  :root { --sp-6: 1.15rem; }
+
+  .page { padding-inline: var(--sp-3); }
+  .stat-grid { grid-template-columns: minmax(0, 1fr); }
+  .qa-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kanban { grid-template-columns: repeat(4, 90vw); }
+  .page-head h1 { font-size: var(--fs-lg); }
+  .card-pad { padding: var(--sp-4); }
+  .cal-num { width: 22px; height: 22px; font-size: 11px; }
+  .avatar-stack > * { margin-left: -12px; }
+  .segmented { width: 100%; overflow-x: auto; }
+  .btn { padding-inline: var(--sp-4); }
+}
+
+/* =============================================================================
+   SHORT VIEWPORTS  (landscape phones)
+   ========================================================================== */
+@media (max-height: 560px) and (orientation: landscape) {
+  .app-sidebar { padding-block: var(--sp-2); }
+  .sidebar-upsell { display: none; }
+  .nav-item { height: 36px; }
+  .modal { max-height: 94svh; }
+  .modal--command { margin-top: 3vh; }
+}
+
+/* =============================================================================
+   INPUT-MODALITY ADAPTATION
+   ========================================================================== */
+
+/* Coarse pointers: bigger hit targets, no hover-only affordances. */
+@media (pointer: coarse) {
+  .btn      { min-height: 44px; }
+  .btn--sm  { min-height: 38px; }
+  .icon-btn { width: 44px; height: 44px; }
+  .nav-item { height: 46px; }
+  .pop-item { padding-block: var(--sp-3); }
+  .check .box { width: 22px; height: 22px; }
+  .row-actions { opacity: 1; transform: none; }
+  [data-tip]::after { display: none; }
+  .task-card { padding-block: var(--sp-4); }   /* easier to grab for drag */
+}
+
+/* Fine pointers only: the cursor glow is meaningless on touch. */
+@media (pointer: fine) and (min-width: 1025px) {
+  .cursor-glow { display: block; }
+}
+
+/* iOS zooms in on any input under 16px — bump them on small touch screens. */
+@media (max-width: 860px) and (pointer: coarse) {
+  input, select, textarea { font-size: 16px; }
+  .topbar-search input { font-size: 16px; }
+}
+
+/* Devices that cannot do backdrop-filter get solid surfaces instead of
+   washed-out translucency. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .app-topbar, .app-sidebar, .toast, .table-wrap, .card, .chart-tip {
+    background: var(--bg-2);
+  }
+  [data-theme='light'] .app-topbar,
+  [data-theme='light'] .app-sidebar { background: #fff; }
+}
+
+/* Low-end / data-saver: drop the expensive ambient layers entirely. */
+@media (prefers-reduced-data: reduce) {
+  .fx-aurora, .fx-blob, .fx-particles, .fx-noise { display: none; }
+}
+
+/* Utility visibility helpers used by the shell. */
+.topbar-search-btn { display: none; }
+.only-mobile  { display: none; }
+.only-desktop { display: revert; }
+@media (max-width: 860px) {
+  .only-mobile  { display: revert; }
+  .only-desktop { display: none !important; }
+}

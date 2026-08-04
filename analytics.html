@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks analytics — growth, completion rates and year-over-year comparisons.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Analytics</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <div class="page-head">
+          <div>
+            <h1>Analytics</h1>
+            <p class="sub">How the studio is trending across revenue, delivery and people.</p>
+          </div>
+
+          <div class="page-head-actions">
+            <span class="realtime-pill"><i></i><span>Connecting</span></span>
+            <div class="segmented" id="periodSwitch" role="group" aria-label="Comparison period">
+              <button type="button" data-months="6">6M</button>
+              <button type="button" class="is-active" data-months="12">12M</button>
+              <button type="button" data-months="24">24M</button>
+            </div>
+            <button class="btn btn--secondary btn--sm" type="button" id="exportReport">
+              <i data-lucide="file-text"></i> Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Headline metrics -->
+        <section class="stat-grid stagger mb-6" id="growthStats" aria-label="Growth summary"></section>
+
+        <!-- Revenue trend -->
+        <section class="card chart-card mb-4" data-reveal>
+          <div class="chart-head">
+            <div>
+              <h3>Revenue trend</h3>
+              <p>Income, expenses and rolling profit</p>
+            </div>
+            <b class="chart-total" id="trendTotal">—</b>
+          </div>
+          <div class="chart-box chart-box--lg">
+            <canvas id="trendChart" role="img" aria-label="Revenue trend over time"></canvas>
+          </div>
+          <div class="chart-legend" id="trendLegend"></div>
+        </section>
+
+        <!-- Year over year + growth rate -->
+        <section class="split-even mb-4">
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Year-over-year</h3>
+                <p>Monthly revenue compared with last year</p>
+              </div>
+            </div>
+            <div class="chart-box"><canvas id="yoyChart" role="img" aria-label="Year over year comparison"></canvas></div>
+            <div class="chart-legend" id="yoyLegend"></div>
+          </div>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Monthly growth</h3>
+                <p>Percentage change month on month</p>
+              </div>
+            </div>
+            <div class="chart-box"><canvas id="growthChart" role="img" aria-label="Monthly growth rate"></canvas></div>
+          </div>
+        </section>
+
+        <!-- Delivery -->
+        <section class="split mb-4">
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Delivery throughput</h3>
+                <p>Tasks completed vs created, by month</p>
+              </div>
+              <span class="badge is-brand" id="throughputBadge">—</span>
+            </div>
+            <div class="chart-box"><canvas id="throughputChart" role="img" aria-label="Delivery throughput"></canvas></div>
+            <div class="chart-legend" id="throughputLegend"></div>
+          </div>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Workload profile</h3>
+                <p>Where effort sits by priority</p>
+              </div>
+            </div>
+            <div class="chart-box"><canvas id="radarChart" role="img" aria-label="Workload by priority"></canvas></div>
+          </div>
+        </section>
+
+        <!-- Completion + client mix -->
+        <section class="split-even mb-4">
+          <div class="card card-pad" data-reveal>
+            <h3 class="mb-4">Completion rates</h3>
+            <div id="completionPanel"></div>
+          </div>
+
+          <div class="card chart-card" data-reveal>
+            <div class="chart-head">
+              <div>
+                <h3>Revenue by client</h3>
+                <p>Share of paid income</p>
+              </div>
+            </div>
+            <div class="chart-box chart-box--pie donut-wrap">
+              <canvas id="clientMixChart" role="img" aria-label="Revenue by client"></canvas>
+              <div class="donut-center">
+                <b id="clientMixTotal">—</b>
+                <span>Revenue</span>
+              </div>
+            </div>
+            <div class="legend-stack" id="clientMixLegend"></div>
+          </div>
+        </section>
+
+        <!-- Leaderboards -->
+        <section class="split-even">
+          <div class="card card-pad" data-reveal>
+            <h3 class="mb-4">Top projects by budget</h3>
+            <div class="hbar" id="topProjects"></div>
+          </div>
+
+          <div class="card card-pad" data-reveal>
+            <h3 class="mb-4">Client growth</h3>
+            <div class="chart-box chart-box--sm" style="padding:0">
+              <canvas id="clientGrowthChart" role="img" aria-label="Client growth"></canvas>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="analytics.js"></script>
+</body>
+</html>

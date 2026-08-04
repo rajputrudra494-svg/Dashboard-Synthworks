@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SynthWorks">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="55%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#D946EF"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <path d="M41.5 22.8c-1.9-2.4-5-3.8-8.6-3.8-5.9 0-9.9 3.1-9.9 7.6 0 4 2.9 6.2 8.2 7.3l3 .6c3 .6 4.2 1.5 4.2 3.1 0 2-2 3.3-5.2 3.3-3 0-5.3-1.2-6.7-3.4l-4.6 3c2 3.4 5.9 5.4 11.1 5.4 6.4 0 10.7-3.2 10.7-8 0-4.1-2.7-6.4-8.3-7.5l-3-.6c-2.9-.6-4.1-1.4-4.1-2.9 0-1.8 1.8-3 4.7-3 2.7 0 4.6 1 5.9 2.9z" fill="#fff"/>
+</svg>

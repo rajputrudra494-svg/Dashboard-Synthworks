@@ -1,0 +1,43 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "//": [
+    "cleanUrls is deliberately OFF. Every link in this app points at an",
+    "explicit .html file, and turning it on made Vercel 308-redirect",
+    "/login.html -> /login while the redirect rule below sent /login ->",
+    "/login.html: an infinite loop that broke the deployed site.",
+    "",
+    "Caching is deliberately conservative. Filenames are NOT content-hashed",
+    "(there is no build step), so an immutable long-lived cache would pin",
+    "visitors to whatever version they first loaded and no redeploy could",
+    "ever reach them. must-revalidate lets the browser keep the file but",
+    "check with an ETag first, which costs one cheap 304 and stays correct."
+  ],
+
+  "trailingSlash": false,
+
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    {
+      "source": "/(favicon|logo-mark)\\.svg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ],
+
+  "redirects": [
+    { "source": "/login", "destination": "/login.html", "permanent": false },
+    { "source": "/dashboard", "destination": "/dashboard.html", "permanent": false },
+    { "source": "/app", "destination": "/dashboard.html", "permanent": false }
+  ]
+}

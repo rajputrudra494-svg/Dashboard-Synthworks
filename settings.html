@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks settings — workspace, profile, security and notification preferences.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Settings</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <div class="page-head">
+          <div>
+            <h1>Settings</h1>
+            <p class="sub">Workspace configuration, your profile, security and preferences.</p>
+          </div>
+          <div class="page-head-actions">
+            <span class="realtime-pill"><i></i><span>Connecting</span></span>
+          </div>
+        </div>
+
+        <div class="split">
+          <!-- ══ PANELS ═══════════════════════════════════════════════ -->
+          <div class="col gap-4">
+
+            <!-- Profile -->
+            <section class="card card-pad" id="profile" data-reveal aria-labelledby="profileHead">
+              <div class="mb-6">
+                <h2 id="profileHead" class="fs-lg">Your profile</h2>
+                <p class="fs-sm muted">How you appear to everyone else in the workspace.</p>
+              </div>
+
+              <div class="avatar-picker mb-6">
+                <label class="pick" aria-label="Change profile photo">
+                  <input type="file" accept="image/*" id="avatarInput">
+                  <span class="avatar avatar--xl" id="avatarPreview"></span>
+                </label>
+                <div>
+                  <b class="fs-sm">Profile photo</b>
+                  <p class="fs-xs muted">PNG, JPG or WebP · up to 2 MB</p>
+                  <button class="btn btn--sm btn--ghost mt-2" type="button" id="removeAvatar">
+                    <i data-lucide="trash-2"></i> Remove
+                  </button>
+                </div>
+              </div>
+
+              <form id="profileForm" class="form-grid" novalidate>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="fullName">Full name <span class="req">*</span></label>
+                    <input type="text" id="fullName" name="full_name" required minlength="2" autocomplete="name">
+                  </div>
+                  <div class="field">
+                    <label for="jobTitle">Job title</label>
+                    <input type="text" id="jobTitle" name="job_title" autocomplete="organization-title">
+                  </div>
+                  <div class="field">
+                    <label for="profileEmail">Email</label>
+                    <input type="email" id="profileEmail" name="email" readonly aria-readonly="true">
+                    <span class="hint">Changing your sign-in email is done from Supabase Auth.</span>
+                  </div>
+                  <div class="field">
+                    <label for="profilePhone">Phone</label>
+                    <input type="tel" id="profilePhone" name="phone" autocomplete="tel">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="profileBio">About</label>
+                  <textarea id="profileBio" name="bio" rows="3"
+                            placeholder="A sentence your colleagues would find useful."></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2">
+                  <button class="btn btn--secondary" type="reset">Reset</button>
+                  <button class="btn btn--primary" type="submit" id="saveProfile">
+                    <i data-lucide="check"></i> Save profile
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            <!-- Workspace -->
+            <section class="card card-pad" id="workspace" data-reveal aria-labelledby="workspaceHead">
+              <div class="mb-6">
+                <h2 id="workspaceHead" class="fs-lg">Workspace</h2>
+                <p class="fs-sm muted">
+                  Shared by everyone. Changing these updates the app for the whole team instantly.
+                </p>
+              </div>
+
+              <form id="workspaceForm" class="form-grid" novalidate>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="companyName">Company name <span class="req">*</span></label>
+                    <input type="text" id="companyName" name="company_name" required>
+                  </div>
+                  <div class="field">
+                    <label for="tagline">Tagline</label>
+                    <input type="text" id="tagline" name="tagline" placeholder="Design &amp; Engineering Studio">
+                  </div>
+                  <div class="field">
+                    <label for="currency">Currency</label>
+                    <select id="currency" name="currency">
+                      <option value="USD">USD — US Dollar</option>
+                      <option value="EUR">EUR — Euro</option>
+                      <option value="GBP">GBP — British Pound</option>
+                      <option value="INR">INR — Indian Rupee</option>
+                      <option value="AUD">AUD — Australian Dollar</option>
+                      <option value="CAD">CAD — Canadian Dollar</option>
+                      <option value="JPY">JPY — Japanese Yen</option>
+                      <option value="AED">AED — UAE Dirham</option>
+                      <option value="SGD">SGD — Singapore Dollar</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="weekStart">Week starts on</label>
+                    <select id="weekStart" name="week_start">
+                      <option value="1">Monday</option>
+                      <option value="0">Sunday</option>
+                      <option value="6">Saturday</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="flex justify-end gap-2">
+                  <button class="btn btn--primary" type="submit" id="saveWorkspace">
+                    <i data-lucide="check"></i> Save workspace
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            <!-- Appearance -->
+            <section class="card card-pad" id="preferences" data-reveal aria-labelledby="appearanceHead">
+              <div class="mb-6">
+                <h2 id="appearanceHead" class="fs-lg">Appearance</h2>
+                <p class="fs-sm muted">Stored on this device and synced to your account.</p>
+              </div>
+
+              <div class="field mb-6">
+                <span class="label">Theme</span>
+                <div class="theme-cards" id="themeCards" role="radiogroup" aria-label="Theme">
+                  <button class="theme-card" type="button" role="radio" data-theme-choice="dark" aria-checked="false">
+                    <span class="theme-swatch theme-swatch--dark" aria-hidden="true">
+                      <i></i><i></i><i></i>
+                    </span>
+                    <b>Dark</b>
+                    <span>Default</span>
+                  </button>
+                  <button class="theme-card" type="button" role="radio" data-theme-choice="light" aria-checked="false">
+                    <span class="theme-swatch theme-swatch--light" aria-hidden="true">
+                      <i></i><i></i><i></i>
+                    </span>
+                    <b>Light</b>
+                    <span>Bright rooms</span>
+                  </button>
+                  <button class="theme-card" type="button" role="radio" data-theme-choice="system" aria-checked="false">
+                    <span class="theme-swatch theme-swatch--system" aria-hidden="true">
+                      <i></i><i></i><i></i>
+                    </span>
+                    <b>System</b>
+                    <span>Follow the OS</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="setting-row">
+                <div class="st">
+                  <b>Reduce motion</b>
+                  <p>Turns off the aurora, particles, and entrance animations.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="prefReduceMotion">
+                  <span class="track"></span>
+                </label>
+              </div>
+
+              <div class="setting-row">
+                <div class="st">
+                  <b>Compact sidebar</b>
+                  <p>Start every page with the navigation collapsed to icons.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="prefCompactSidebar">
+                  <span class="track"></span>
+                </label>
+              </div>
+            </section>
+
+            <!-- Notifications -->
+            <section class="card card-pad" id="notifications" data-reveal aria-labelledby="notifHead">
+              <div class="mb-6">
+                <h2 id="notifHead" class="fs-lg">Notifications</h2>
+                <p class="fs-sm muted">What you want to be told about while you work.</p>
+              </div>
+
+              <div class="setting-row">
+                <div class="st">
+                  <b>Live change toasts</b>
+                  <p>A quiet toast when a colleague creates, edits or deletes something.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="prefLiveToasts" checked>
+                  <span class="track"></span>
+                </label>
+              </div>
+
+              <div class="setting-row">
+                <div class="st">
+                  <b>Task assignments</b>
+                  <p>Notify me when a task is assigned to me.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="prefTaskAssigned" checked>
+                  <span class="track"></span>
+                </label>
+              </div>
+
+              <div class="setting-row">
+                <div class="st">
+                  <b>Deadline reminders</b>
+                  <p>Warn me when a project or task is due within 48 hours.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="prefDeadlines" checked>
+                  <span class="track"></span>
+                </label>
+              </div>
+
+              <div class="setting-row">
+                <div class="st">
+                  <b>Desktop notifications</b>
+                  <p>Show OS-level notifications when this tab is in the background.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="prefDesktop">
+                  <span class="track"></span>
+                </label>
+              </div>
+
+              <div class="flex justify-end mt-4">
+                <button class="btn btn--secondary btn--sm" type="button" id="testNotification">
+                  <i data-lucide="bell-ring"></i> Send a test
+                </button>
+              </div>
+            </section>
+
+            <!-- Security -->
+            <section class="card card-pad" id="security" data-reveal aria-labelledby="securityHead">
+              <div class="mb-6">
+                <h2 id="securityHead" class="fs-lg">Security</h2>
+                <p class="fs-sm muted">Change your password or sign out everywhere.</p>
+              </div>
+
+              <form id="passwordForm" class="form-grid" novalidate>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="newPassword">New password <span class="req">*</span></label>
+                    <div class="input-group">
+                      <i data-lucide="lock"></i>
+                      <input type="password" id="newPassword" name="password" required minlength="8"
+                             autocomplete="new-password" placeholder="At least 8 characters">
+                      <button class="toggle-eye" type="button" data-toggle-password="newPassword"
+                              aria-label="Show password"><i data-lucide="eye"></i></button>
+                    </div>
+                    <div class="strength" id="pwStrength" data-level="0" aria-hidden="true">
+                      <i></i><i></i><i></i><i></i>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label for="confirmPassword">Confirm password <span class="req">*</span></label>
+                    <div class="input-group">
+                      <i data-lucide="lock-keyhole"></i>
+                      <input type="password" id="confirmPassword" name="confirm" required minlength="8"
+                             autocomplete="new-password" placeholder="Repeat it">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field-error" id="passwordError" hidden></div>
+
+                <div class="flex justify-end gap-2">
+                  <button class="btn btn--primary" type="submit" id="savePassword">
+                    <i data-lucide="shield-check"></i> Update password
+                  </button>
+                </div>
+              </form>
+
+              <hr class="mt-6 mb-6">
+
+              <div class="setting-row" style="border:0;padding-top:0">
+                <div class="st">
+                  <b>Sign out of this device</b>
+                  <p>You'll need your email and password to get back in.</p>
+                </div>
+                <button class="btn btn--danger" type="button" data-action="logout">
+                  <i data-lucide="log-out"></i> Sign out
+                </button>
+              </div>
+            </section>
+
+            <!-- Data -->
+            <section class="card card-pad" id="data" data-reveal aria-labelledby="dataHead">
+              <div class="mb-6">
+                <h2 id="dataHead" class="fs-lg">Data</h2>
+                <p class="fs-sm muted">Export a snapshot of the workspace for your own records.</p>
+              </div>
+
+              <div class="qa-grid">
+                <button class="qa-tile" type="button" data-export="clients">
+                  <i data-lucide="building-2"></i> Clients CSV
+                </button>
+                <button class="qa-tile" type="button" data-export="projects">
+                  <i data-lucide="folder-kanban"></i> Projects CSV
+                </button>
+                <button class="qa-tile" type="button" data-export="tasks">
+                  <i data-lucide="circle-check-big"></i> Tasks CSV
+                </button>
+                <button class="qa-tile" type="button" data-export="finance">
+                  <i data-lucide="receipt"></i> Finance CSV
+                </button>
+                <button class="qa-tile" type="button" data-export="all">
+                  <i data-lucide="database"></i> Full JSON
+                </button>
+              </div>
+            </section>
+          </div>
+
+          <!-- ══ SIDE COLUMN ══════════════════════════════════════════ -->
+          <div class="col gap-4">
+            <nav class="card card-pad settings-nav" data-reveal aria-label="Settings sections">
+              <h3 class="fs-sm mb-3">On this page</h3>
+              <a class="nav-item" href="#profile"><i data-lucide="user"></i><span>Profile</span></a>
+              <a class="nav-item" href="#workspace"><i data-lucide="building"></i><span>Workspace</span></a>
+              <a class="nav-item" href="#preferences"><i data-lucide="palette"></i><span>Appearance</span></a>
+              <a class="nav-item" href="#notifications"><i data-lucide="bell"></i><span>Notifications</span></a>
+              <a class="nav-item" href="#security"><i data-lucide="shield"></i><span>Security</span></a>
+              <a class="nav-item" href="#data"><i data-lucide="database"></i><span>Data</span></a>
+            </nav>
+
+            <div class="card card-pad" data-reveal>
+              <h3 class="fs-sm mb-4">Workspace at a glance</h3>
+              <div class="cli-rows" id="workspaceStats"></div>
+            </div>
+
+            <div class="card card-pad" data-reveal>
+              <h3 class="fs-sm mb-4">Connection</h3>
+              <div class="cli-rows" id="connectionInfo"></div>
+            </div>
+
+            <div class="card card-pad" data-reveal>
+              <h3 class="fs-sm mb-3">Keyboard shortcuts</h3>
+              <div class="cli-rows fs-xs">
+                <div class="cli-row"><span>Command palette</span><span><kbd>Ctrl</kbd><kbd>K</kbd></span></div>
+                <div class="cli-row"><span>Search</span><span><kbd>/</kbd></span></div>
+                <div class="cli-row"><span>Toggle theme</span><span><kbd>Shift</kbd><kbd>D</kbd></span></div>
+                <div class="cli-row"><span>Go to dashboard</span><span><kbd>G</kbd><kbd>D</kbd></span></div>
+                <div class="cli-row"><span>Go to projects</span><span><kbd>G</kbd><kbd>P</kbd></span></div>
+                <div class="cli-row"><span>Go to tasks</span><span><kbd>G</kbd><kbd>T</kbd></span></div>
+                <div class="cli-row"><span>Move a task card</span><span><kbd>←</kbd><kbd>→</kbd></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="SynthWorks mark">
+  <defs>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="55%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#D946EF"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#mark)"/>
+  <path d="M31.2 17.1c-1.4-1.8-3.8-2.9-6.5-2.9-4.4 0-7.4 2.4-7.4 5.7 0 3 2.2 4.7 6.1 5.5l2.3.5c2.3.4 3.2 1.1 3.2 2.3 0 1.5-1.5 2.5-3.9 2.5-2.3 0-4-.9-5-2.6l-3.5 2.3c1.5 2.6 4.5 4.1 8.4 4.1 4.8 0 8-2.4 8-6 0-3.1-2-4.8-6.2-5.7l-2.3-.5c-2.2-.4-3.1-1-3.1-2.2 0-1.4 1.4-2.2 3.5-2.2 2 0 3.5.7 4.4 2.2z" fill="#fff"/>
+</svg>

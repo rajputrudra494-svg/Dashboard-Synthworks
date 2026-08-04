@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="SynthWorks projects — budgets, milestones, files and progress across the studio.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="robots" content="noindex">
+
+  <title>SynthWorks · Projects</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script src="theme-init.js"></script>
+
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="cards.css">
+  <link rel="stylesheet" href="tables.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="charts.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <aside class="app-sidebar" aria-label="Primary navigation"></aside>
+
+    <div class="app-main">
+      <header class="app-topbar"></header>
+
+      <main class="page" id="main">
+        <div class="page-head">
+          <div>
+            <h1>Projects</h1>
+            <p class="sub">Everything in flight, with budgets, owners and deadlines.</p>
+          </div>
+
+          <div class="page-head-actions">
+            <span class="realtime-pill"><i></i><span>Connecting</span></span>
+            <button class="btn btn--secondary btn--sm" type="button" id="exportProjects">
+              <i data-lucide="download"></i> Export
+            </button>
+            <button class="btn btn--primary btn--sm" type="button" id="addProject">
+              <i data-lucide="plus"></i> New project
+            </button>
+          </div>
+        </div>
+
+        <section class="stat-grid stagger mb-6" id="projectStats" aria-label="Project summary"></section>
+
+        <div class="between mb-4">
+          <div class="segmented" id="viewSwitch" role="group" aria-label="View mode">
+            <button type="button" class="is-active" data-view="board">
+              <i data-lucide="layout-grid"></i> Board
+            </button>
+            <button type="button" data-view="table">
+              <i data-lucide="list"></i> Table
+            </button>
+            <button type="button" data-view="timeline">
+              <i data-lucide="gantt-chart"></i> Timeline
+            </button>
+          </div>
+
+          <div class="segmented" id="statusFilter" role="group" aria-label="Filter by status">
+            <button type="button" class="is-active" data-status="all">All</button>
+            <button type="button" data-status="active">Active</button>
+            <button type="button" data-status="review">Review</button>
+            <button type="button" data-status="completed">Done</button>
+          </div>
+        </div>
+
+        <!-- Card board -->
+        <section id="projectBoard" class="grid-auto" aria-label="Project cards"></section>
+
+        <!-- Table -->
+        <section id="projectTable" aria-label="Project list" hidden></section>
+
+        <!-- Timeline -->
+        <section id="projectTimeline" class="card card-pad" aria-label="Project timeline" hidden></section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script type="module" src="projects.js"></script>
+</body>
+</html>
